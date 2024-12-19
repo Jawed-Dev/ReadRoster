@@ -1,0 +1,13 @@
+# IDEs
+.idea/
+.vscode/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+
+# Backend
+backend/target/
+backend/HELP.md
+backend/.mvn/wrapper/maven-wrapper.jar 

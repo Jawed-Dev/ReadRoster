@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 })
 export class LoginComponent {
   credentials: LoginCredentials = {
-    username: '',
+    email: '',
     password: ''
   };
   message: string = '';

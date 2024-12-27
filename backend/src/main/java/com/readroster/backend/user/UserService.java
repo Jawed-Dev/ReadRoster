@@ -1,5 +1,4 @@
 package com.readroster.backend.user;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -7,9 +6,11 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
-    UserService(UserRepository userRepository) {
+    UserService(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     public UserResponse<User> findByEmail(String email) {
@@ -22,6 +23,5 @@ public class UserService {
         catch (Exception e) {
             return UserResponse.error("An unexpected error occurred");
         }
-
     }
 }

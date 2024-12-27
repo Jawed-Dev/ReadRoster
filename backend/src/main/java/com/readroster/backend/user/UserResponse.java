@@ -1,58 +1,33 @@
 package com.readroster.backend.user;
 
 public class UserResponse<T> {
-    private T data;
-    private String error;
-    private ServiceStatus status;
+    private final boolean success;
+    private final String message;
+    private final T data;
 
-    public enum ServiceStatus {
-        SUCCESS,
-        NOT_FOUND,
-        INVALID_INPUT,
-        ERROR
+    private UserResponse(T data, boolean success, String message) {
+        this.data = data;
+        this.success = success;
+        this.message = message;
     }
 
     public static <T> UserResponse<T> success(T data) {
-        return new UserResponse<>(data);
+        return new UserResponse<>(data, true, null);
     }
 
     public static <T> UserResponse<T> error(String message) {
-        return new UserResponse<>(ServiceStatus.ERROR, message);
+        return new UserResponse<>(null, false, message);
     }
 
-    private UserResponse(T data) {
-        this.data = data;
-        this.status = ServiceStatus.SUCCESS;
+    public boolean isSuccess() {
+        return success;
     }
 
-    private UserResponse(ServiceStatus status, String error) {
-        this.status = status;
-        this.error = error;
-    }
-
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
+    public String getMessage() {
+        return message;
     }
 
     public T getData() {
         return data;
     }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    public ServiceStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(ServiceStatus status) {
-        this.status = status;
-    }
-
-
 }

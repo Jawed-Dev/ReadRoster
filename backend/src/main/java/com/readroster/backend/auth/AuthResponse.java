@@ -5,16 +5,18 @@ public class AuthResponse<T> {
     private final String errorMessage;
     private final T data;
 
-    public AuthResponse(T data) {
-        this.success = true;
-        this.errorMessage = null;
+    private AuthResponse(T data, boolean success, String errorMessage) {
+        this.success = success;
+        this.errorMessage = errorMessage;
         this.data = data;
     }
 
-    public AuthResponse(String errorMessage) {
-        this.success = false;
-        this.errorMessage = errorMessage;
-        this.data = null;
+    public static <T> AuthResponse<T> success(T data) {
+        return new AuthResponse<>(data, true, null);
+    }
+
+    public static <T> AuthResponse<T> error(String message) {
+        return new AuthResponse<>(null, false, message);
     }
 
     public boolean isSuccess() {

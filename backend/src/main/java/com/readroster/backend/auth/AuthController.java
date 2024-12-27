@@ -1,5 +1,6 @@
 package com.readroster.backend.auth;
 import com.readroster.backend.user.User;
+import com.readroster.backend.user.UserDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +17,8 @@ public class AuthController {
     }
 
     @PostMapping("auth/login")
-    public ResponseEntity<AuthResponse<User>> login(@RequestBody LoginDto loginDto) {
-        AuthResponse<User> authResponse = this.authService.login(loginDto);
+    public ResponseEntity<AuthResponse<UserDto>> login(@RequestBody LoginDto loginDto) {
+        AuthResponse<UserDto> authResponse = this.authService.login(loginDto);
         if(!authResponse.isSuccess()) {
             return ResponseEntity.badRequest().body(authResponse);
         }

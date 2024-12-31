@@ -1,6 +1,5 @@
 package com.readroster.backend.user;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service

@@ -1,10 +1,6 @@
 package com.readroster.backend.auth;
-import com.readroster.backend.user.User;
-import com.readroster.backend.user.UserDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -17,8 +13,33 @@ public class AuthController {
     }
 
     @PostMapping("auth/login")
-    public ResponseEntity<AuthResponse<UserDto>> login(@RequestBody LoginDto loginDto) {
-        AuthResponse<UserDto> authResponse = this.authService.login(loginDto);
+    public ResponseEntity<AuthResponse<AuthDto>> login(@RequestBody LoginDto loginDto) {
+        AuthResponse<AuthDto> authResponse = this.authService.login(loginDto);
+        if(!authResponse.isSuccess()) {
+            return ResponseEntity.badRequest().body(authResponse);
+        }
+        return ResponseEntity.ok(authResponse);
+    }
+
+    @PostMapping("auth/logout")
+    public ResponseEntity<AuthResponse<Void>> logout() {
+        AuthResponse<Void> authResponse = this.authService.logout();
+        if(!authResponse.isSuccess()) {
+            return ResponseEntity.badRequest().body(authResponse);
+        }
+        return ResponseEntity.ok(authResponse);
+    }
+
+    @GetMapping("auth/isAuth")
+    public ResponseEntity<AuthResponse<Boolean>> isAuthenticated() {
+        System.out.println("Entering isAuthenticated endpoint");
+        AuthResponse<Boolean> authResponse = this.authService.isAuthenticated();
+        return ResponseEntity.ok(authResponse);
+    }
+
+    @GetMapping("auth/getDataSession")
+    public ResponseEntity<AuthResponse<AuthDto>> getDataSession() {
+        AuthResponse<AuthDto> authResponse = this.authService.getDataSession();
         if(!authResponse.isSuccess()) {
             return ResponseEntity.badRequest().body(authResponse);
         }

@@ -1,4 +1,5 @@
 package com.readroster.backend.auth;
+
 public class LoginDto {
     private String email;
     private String password;

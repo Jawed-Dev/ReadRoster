@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { LoginCredentials } from './auth.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -18,8 +19,11 @@ export class LoginComponent {
     password: ''
   };
   message: string = '';
+  isAuthenticated$: Observable<boolean>;  // Déclaration de la propriété
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+    this.isAuthenticated$ = this.authService.isAuthenticated$;  // Initialisation dans le constructeur
+  }
 
   onSubmit(): void {
     this.authService.login(this.credentials).subscribe({
@@ -33,4 +37,17 @@ export class LoginComponent {
       }
     });
   }
+
+  onLogout(): void {
+    this.authService.logout().subscribe({
+      next: () => {
+        this.message = 'Déconnexion réussie';
+      },
+      error: () => {
+        this.message = 'Erreur lors de la déconnexion';
+      }
+    });
+  }
+
+  
 }

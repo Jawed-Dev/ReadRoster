@@ -1,28 +1,30 @@
 import { Component } from '@angular/core';
-import { AuthService } from './auth.service';
-import { LoginCredentials } from './auth.model';
-import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { LoginCredentials } from '../../models/auth.model';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
+  standalone: true, 
   imports: [
     CommonModule,
     FormsModule
   ]
 })
+
 export class LoginComponent {
   credentials: LoginCredentials = {
     email: '',
     password: ''
   };
   message: string = '';
-  isAuthenticated$: Observable<boolean>;  // Déclaration de la propriété
+  isAuthenticated$: Observable<boolean>; 
 
   constructor(private authService: AuthService) {
-    this.isAuthenticated$ = this.authService.isAuthenticated$;  // Initialisation dans le constructeur
+    this.isAuthenticated$ = this.authService.isAuthenticated$;  
   }
 
   onSubmit(): void {

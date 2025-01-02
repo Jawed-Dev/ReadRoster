@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, tap } from 'rxjs';
-import { LoginCredentials } from './auth.model';
+import { AuthResponse, LoginCredentials, UserResponse } from '../models/auth.model';
+import { apiEnvironment } from '@env/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8081/api'; 
+  private apiUrl = apiEnvironment.apiUrl; 
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
   
@@ -15,9 +16,9 @@ export class AuthService {
     this.getStateSession();
   }
 
-  login(credentials: LoginCredentials): Observable<string> {
+  login(credentials: LoginCredentials): Observable<AuthResponse<UserResponse>> {
     console.log('Sending credentials:', credentials);
-    return this.http.post<string>(`${this.apiUrl}/auth/login`, credentials).pipe(
+    return this.http.post<AuthResponse<UserResponse>>(`${this.apiUrl}/auth/login`, credentials).pipe(
       tap({
         next: (response) => {
           console.log('Login successful:', response);
@@ -44,9 +45,8 @@ export class AuthService {
     }).subscribe({
       next: () => this.isAuthenticatedSubject.next(true),
       error: () => this.isAuthenticatedSubject.next(false)
-      // complete: () => { } // optionnel
     });
-}
+  }
 
   isAuthenticated(): boolean {
     return this.isAuthenticatedSubject.value;

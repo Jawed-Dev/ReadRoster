@@ -10,8 +10,9 @@
 
   <!-- When user is not connected -->
   <form *ngIf="!(isAuthenticated$ | async)" (ngSubmit)="onSubmit()">
+    
     <div class="form-group">
-      <label for="email">Nom d'utilisateur:</label>
+      <label for="email" class="text-red-500">Nom d'utilisateur:</label>
       <input 
         type="text" 
         id="email"

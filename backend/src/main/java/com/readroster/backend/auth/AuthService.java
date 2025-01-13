@@ -23,8 +23,8 @@ public class AuthService {
     }
 
     public AuthResponse<Boolean> isAuthenticated() {
-        Boolean stateAuth = session.getAttribute(AuthConstant.SESSION_USER) != null;
-        System.out.println(stateAuth);
+        Object sessionUser = session.getAttribute(AuthConstant.SESSION_USER);
+        boolean stateAuth = (sessionUser != null);
         return AuthResponse.success(stateAuth);
     }
 

@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
     private final AuthService authService;
 
@@ -21,6 +20,15 @@ public class AuthController {
         return ResponseEntity.ok(authResponse);
     }
 
+    @GetMapping("auth/isAuth")
+    public ResponseEntity<AuthResponse<Boolean>> isAuthenticated() {
+        AuthResponse<Boolean> authResponse = this.authService.isAuthenticated();
+        if(!authResponse.isSuccess()) {
+            return ResponseEntity.badRequest().body(authResponse);
+        }
+        return ResponseEntity.ok(authResponse);
+    }
+
     @PostMapping("auth/logout")
     public ResponseEntity<AuthResponse<Void>> logout() {
         AuthResponse<Void> authResponse = this.authService.logout();
@@ -30,12 +38,7 @@ public class AuthController {
         return ResponseEntity.ok(authResponse);
     }
 
-    @GetMapping("auth/isAuth")
-    public ResponseEntity<AuthResponse<Boolean>> isAuthenticated() {
-        System.out.println("Entering isAuthenticated endpoint");
-        AuthResponse<Boolean> authResponse = this.authService.isAuthenticated();
-        return ResponseEntity.ok(authResponse);
-    }
+
 
     @GetMapping("auth/getDataSession")
     public ResponseEntity<AuthResponse<AuthDto>> getDataSession() {

@@ -1,4 +1,4 @@
-<div class="login-container">
+<div class="flex flex-col">
   <h2>
     <ng-container *ngIf="isAuthenticated$ | async; else loginTitle">
       Mon Compte
@@ -11,35 +11,42 @@
   <!-- When user is not connected -->
   <form *ngIf="!(isAuthenticated$ | async)" (ngSubmit)="onSubmit()">
     
-    <div class="form-group">
-      <label for="email" class="text-red-500">Nom d'utilisateur:</label>
-      <input 
-        type="text" 
-        id="email"
-        [(ngModel)]="credentials.email"
-        name="email"
-        required>
-    </div>
+    <app-input
+      id="email"
+      type="email"
+      label="Email"
+      [(value)]="credentials.email"
+      placeholder="Entrez votre email"
+      [required]="true"
+    ></app-input>
 
-    <div class="form-group">
-      <label for="password">Mot de passe:</label>
-      <input 
-        type="password" 
-        id="password"
-        [(ngModel)]="credentials.password"
-        name="password"
-        required>
-    </div>
+    <app-input
+      id="password"
+      type="password"
+      label="Mot de passe"
+      [(value)]="credentials.password"
+      placeholder="Entrez votre mot de passe"
+      [required]="true"
+    ></app-input>
 
-    <button type="submit">Se connecter</button>
+    <app-button  
+      type="submit" 
+      variant="primary"
+      [disabled]="!credentials.email || !credentials.password">
+      Se connecter
+    </app-button>
   </form>
 
   <!-- When user is connected -->
   <div *ngIf="isAuthenticated$ | async">
-    <button (click)="onLogout()">Se déconnecter</button>
+    <app-button 
+      variant="secondary"
+      (buttonClick)="onLogout()">
+      Se déconnecter
+    </app-button>
   </div>
 
-  <p *ngIf="message" [class.error]="message.includes('Erreur')">
+  <p *ngIf="message" class="bg-slate-400 mt-2 p-1 w-fit" [class.error]="message.includes('Erreur')">
     {{ message }}
   </p>
 </div>

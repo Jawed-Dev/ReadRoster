@@ -4,6 +4,8 @@ import { LoginCredentials } from '../../models/auth.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { ButtonComponent } from '@shared/components/button';
+import { InputComponent } from '@shared/components/input';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +13,9 @@ import { Observable } from 'rxjs';
   standalone: true, 
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    ButtonComponent,
+    InputComponent
   ]
 })
 

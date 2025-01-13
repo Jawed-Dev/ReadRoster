@@ -1,9 +1,23 @@
 package com.readroster.backend.auth;
+import java.io.Serial;
+import java.io.Serializable;
 
-public class AuthDto {
+public class AuthDto implements Serializable  {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private String email;
     private String firstName;
     private String lastName;
+
+    @Override
+    public String toString() {
+        return "AuthDto{" +
+                "email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
+    }
 
     public String getFirstName() {
         return firstName;

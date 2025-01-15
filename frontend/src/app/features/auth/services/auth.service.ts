@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, tap } from 'rxjs';
-import { AuthResponse, LoginCredentials, UserResponse } from '../models/auth.model';
+import { AuthResponse, LoginCredentials, AuthDto } from '../models/auth.model';
 import { environment } from '@env/environment';
 
 
@@ -13,10 +13,10 @@ export class AuthService {
   isAuthenticated$ = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient) {
-    this.checkAuthState();
+    this.getAuthState();
   }
 
-  private checkAuthState() {
+  private getAuthState() {
     this.isAuthenticated().subscribe({
       next: (response) => {
         console.log('Auth check response:', response);
@@ -29,8 +29,8 @@ export class AuthService {
     });
   }
 
-  login(credentials: LoginCredentials): Observable<AuthResponse<UserResponse>> {
-    return this.http.post<AuthResponse<UserResponse>>(`${this.baseUrl}/login`, credentials, {
+  login(credentials: LoginCredentials): Observable<AuthResponse<AuthDto>> {
+    return this.http.post<AuthResponse<AuthDto>>(`${this.baseUrl}/login`, credentials, {
       withCredentials: true,
       headers: {
         'Content-Type': 'application/json'

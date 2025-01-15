@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
   imports: [RouterOutlet, CommonModule],
   templateUrl: './app.component.html'
 })
+
 export class AppComponent {
   title = 'frontend';
 }

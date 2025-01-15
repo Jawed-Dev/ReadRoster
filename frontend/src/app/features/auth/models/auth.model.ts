@@ -9,7 +9,7 @@ export interface AuthResponse<T> {
   data: T;
 }
 
-export interface UserResponse {
+export interface AuthDto {
   email: string;
   firstName: string;
   lastName: string;

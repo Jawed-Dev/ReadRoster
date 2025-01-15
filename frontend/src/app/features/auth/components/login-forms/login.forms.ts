@@ -9,7 +9,7 @@ import { InputComponent } from '@shared/components/input';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
+  templateUrl: './login.forms.html',
   standalone: true, 
   imports: [
     CommonModule,

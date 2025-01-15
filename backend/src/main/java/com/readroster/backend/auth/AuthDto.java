@@ -10,14 +10,14 @@ public class AuthDto implements Serializable  {
     private String firstName;
     private String lastName;
 
-    @Override
+    /*@Override
     public String toString() {
         return "AuthDto{" +
                 "email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';
-    }
+    }*/
 
     public String getFirstName() {
         return firstName;

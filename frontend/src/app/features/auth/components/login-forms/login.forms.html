@@ -10,7 +10,6 @@
 
   <!-- When user is not connected -->
   <form *ngIf="!(isAuthenticated$ | async)" (ngSubmit)="onSubmit()">
-    
     <app-input
       id="email"
       type="email"

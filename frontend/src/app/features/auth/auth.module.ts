@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { LoginComponent } from './components/login-forms/login.forms';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { AuthService } from './services/auth.service';
 import { AuthRoutingModule } from './auth-routing.module';
 
@@ -10,7 +10,7 @@ import { AuthRoutingModule } from './auth-routing.module';
     CommonModule,
     FormsModule,
     AuthRoutingModule,
-    LoginComponent
+    LoginPageComponent
   ],
   providers: [
     AuthService

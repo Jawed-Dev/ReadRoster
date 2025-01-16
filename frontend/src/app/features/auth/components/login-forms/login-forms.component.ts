@@ -1,4 +1,3 @@
-import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { LoginCredentials } from '../../models/auth.model';
 import { CommonModule } from '@angular/common';
@@ -6,10 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ButtonComponent } from '@shared/components/button';
 import { InputComponent } from '@shared/components/input';
+import { Component, EventEmitter, Output } from '@angular/core'; 
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.forms.html',
+  selector: 'app-login-forms',
+  templateUrl: './login-forms.component.html',
   standalone: true, 
   imports: [
     CommonModule,
@@ -19,13 +19,16 @@ import { InputComponent } from '@shared/components/input';
   ]
 })
 
-export class LoginComponent {
+export class LoginFormsComponent {
+  @Output() submitLogin = new EventEmitter<LoginCredentials>(); 
+  
   credentials: LoginCredentials = {
     email: '',
     password: ''
   };
   message: string = '';
   isAuthenticated$: Observable<boolean>; 
+  
 
   constructor(private authService: AuthService) {
     this.isAuthenticated$ = this.authService.isAuthenticated$;  
@@ -35,6 +38,7 @@ export class LoginComponent {
     this.authService.login(this.credentials).subscribe({
       next: (response) => {
         this.message = 'Connexion réussie !';
+        this.submitLogin.emit(this.credentials); 
         console.log('Réponse:', response);
       },
       error: (error) => {
@@ -53,7 +57,6 @@ export class LoginComponent {
         this.message = 'Erreur lors de la déconnexion';
       }
     });
-  }
-
-  
+  } 
 }
+

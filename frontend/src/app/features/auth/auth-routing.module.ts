@@ -1,10 +1,10 @@
 // auth-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './components/login-forms/login.forms';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginPageComponent }
 ];
 
 @NgModule({

@@ -3,13 +3,20 @@ import com.readroster.backend.user.User;
 import com.readroster.backend.user.UserResponse;
 import com.readroster.backend.user.UserService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class AuthService {
     private final UserService userService;
     private final AuthMapper authMapper;
     private final HttpSession session;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public AuthService(UserService userService, AuthMapper authMapper, HttpSession session) {
         this.userService = userService;
@@ -41,12 +48,17 @@ public class AuthService {
             }
 
             User user = userResponse.getData();
-            if(!loginDto.getPassword().equals(user.getPassword())) {
-                return AuthResponse.error("Error");
+            if(!passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
+                return AuthResponse.error("Credentials error");
             }
 
             AuthDto authDto = this.authMapper.toDto(user);
             this.createSession(authDto);
+
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String hashedPassword = encoder.encode(loginDto.getPassword());
+            System.out.println(hashedPassword);
+
             return AuthResponse.success(authDto);
         }
         catch (Exception e) {

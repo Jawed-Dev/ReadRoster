@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+
 @Component({
   selector: 'app-button',
   standalone: true,
@@ -9,7 +10,7 @@ import { CommonModule } from '@angular/common';
     <button
       [type]="type"
       [disabled]="disabled"
-      class="p-2 rounded transition-colors duration-200 mt-2"
+      class="p-2 rounded transition-colors duration-200 mt-2 w-[300px]"
       [ngClass]="getButtonClasses()"
       (click)="onClick($event)">
       <ng-content></ng-content>

@@ -1,5 +1,13 @@
-<div class="app-login-page">
-    <app-login-forms
-        (submitLogin)="onLogin($event)"
-    ></app-login-forms>
-</div>
+<main>
+    <body class="flex justify-center h-screen">
+        <div class="app-login-page flex w-full">
+            <app-login-forms class="w-1/2"
+                (submitLogin)="onLogin($event)"
+            ></app-login-forms>
+
+            <app-login-banner class="w-1/2 bg-black">
+
+            </app-login-banner>
+        </div>
+    </body>
+</main>

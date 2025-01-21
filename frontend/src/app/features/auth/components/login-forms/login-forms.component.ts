@@ -19,7 +19,6 @@ import { Component, EventEmitter, Output } from '@angular/core';
   ]
 })
 
-
 export class LoginFormsComponent {
   @Output() submitLogin = new EventEmitter<LoginCredentials>(); 
   
@@ -30,7 +29,6 @@ export class LoginFormsComponent {
   message: string = '';
   isAuthenticated$: Observable<boolean>; 
   
-
   constructor(private authService: AuthService) {
     this.isAuthenticated$ = this.authService.isAuthenticated$;  
   }

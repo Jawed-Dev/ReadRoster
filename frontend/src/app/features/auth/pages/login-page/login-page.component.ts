@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LoginFormsComponent } from '@features/auth/components/login-forms/login-forms.component';
 import { LoginCredentials } from '@features/auth/models/auth.model';
-import { LoginBannerComponent } from '@features/auth/components/login-banner/login-banner.component';
+import { AuthBannerComponent } from '@features/auth/components/auth-banner/auth-banner.component';
 
 @Component({
   selector: 'app-login-page',
@@ -13,7 +13,7 @@ import { LoginBannerComponent } from '@features/auth/components/login-banner/log
     CommonModule,
     FormsModule,
     LoginFormsComponent,
-    LoginBannerComponent
+    AuthBannerComponent
   ]
 })
 

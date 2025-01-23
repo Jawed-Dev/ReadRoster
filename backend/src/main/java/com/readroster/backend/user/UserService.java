@@ -1,4 +1,9 @@
 package com.readroster.backend.user;
+import com.readroster.backend.auth.AuthDto;
+import com.readroster.backend.auth.AuthResponse;
+import com.readroster.backend.auth.LoginDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
@@ -21,6 +26,18 @@ public class UserService {
         }
         catch (Exception e) {
             return UserResponse.error("An unexpected error occurred");
+        }
+    }
+
+    public UserResponse<User> register(User user) {
+        try {
+            Optional<User> userOptional = Optional.of(userRepository.save(user));
+            return userOptional
+                    .map(UserResponse::success)
+                    .orElse(UserResponse.error("Error register"));
+        }
+        catch (Exception e) {
+            return UserResponse.error("Error");
         }
     }
 }

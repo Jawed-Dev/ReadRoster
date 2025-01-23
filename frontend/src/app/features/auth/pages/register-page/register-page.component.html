@@ -2,6 +2,8 @@
     <body class="flex justify-center h-screen">
         <div class="app-login-page flex w-full">
             <app-register-forms class="w-1/2"
+                (submitRegister)="handleRegister($event)"
+                [message]="message"
             ></app-register-forms>
 
             <app-auth-banner class="w-1/2 bg-black">

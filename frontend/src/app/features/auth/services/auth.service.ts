@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, tap } from 'rxjs';
-import { AuthResponse, LoginCredentials, AuthDto } from '../models/auth.model';
+import { AuthResponse, LoginCredentials, AuthDto, RegisterCredentials } from '../models/auth.model';
 import { environment } from '@env/environment';
 
 
@@ -58,5 +58,14 @@ export class AuthService {
         this.isAuthenticated$.next(false);
       })
     );
+  }
+
+  register(credentials: RegisterCredentials): Observable<AuthResponse<AuthDto>> {
+    return this.http.post<AuthResponse<AuthDto>>(`${this.baseUrl}/register`, credentials, {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   }
 }

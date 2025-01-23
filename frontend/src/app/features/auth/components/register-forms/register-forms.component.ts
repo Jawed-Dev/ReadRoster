@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from '@shared/components/button';
 import { InputComponent } from '@shared/components/input';
-import { Component, EventEmitter, Output } from '@angular/core'; 
+import { Component, EventEmitter, Input, Output } from '@angular/core'; 
 
 @Component({
   selector: 'app-register-forms',
@@ -27,7 +27,10 @@ export class RegisterFormsComponent {
     password: '',
     confirmPassword: ''
   };
+  @Input() message: string = '';  
 
-  message: string = '';  
+  onSubmit(): void {
+    this.submitRegister.emit(this.credentials);
+  }
 }
 

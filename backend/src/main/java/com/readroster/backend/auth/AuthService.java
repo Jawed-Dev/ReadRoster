@@ -14,14 +14,13 @@ public class AuthService {
     private final UserService userService;
     private final AuthMapper authMapper;
     private final HttpSession session;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    public AuthService(UserService userService, AuthMapper authMapper, HttpSession session) {
+    public AuthService(UserService userService, AuthMapper authMapper, HttpSession session, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.authMapper = authMapper;
         this.session = session;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public AuthResponse<AuthDto> getDataSession() {
@@ -48,7 +47,7 @@ public class AuthService {
             }
 
             User user = userResponse.getData();
-            if(!passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
+            if(!this.passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
                 return AuthResponse.error("Credentials error");
             }
 
@@ -68,7 +67,7 @@ public class AuthService {
 
     public AuthResponse<Void> logout() {
         try {
-            session.removeAttribute(AuthConstant.SESSION_USER);
+            this.session.removeAttribute(AuthConstant.SESSION_USER);
             return AuthResponse.success(null);
         } catch (Exception e) {
             return AuthResponse.error("Erreur lors de la déconnexion");

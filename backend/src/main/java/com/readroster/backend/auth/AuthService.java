@@ -2,8 +2,6 @@ package com.readroster.backend.auth;
 import com.readroster.backend.user.User;
 import com.readroster.backend.user.UserResponse;
 import com.readroster.backend.user.UserService;
-import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,34 +11,32 @@ import org.springframework.stereotype.Service;
 public class AuthService {
     private final UserService userService;
     private final AuthMapper authMapper;
-    private final HttpSession session;
+    private final SessionService sessionService;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthService(UserService userService, AuthMapper authMapper, HttpSession session, PasswordEncoder passwordEncoder) {
+    public AuthService(UserService userService, AuthMapper authMapper, SessionService sessionService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.authMapper = authMapper;
-        this.session = session;
+        this.sessionService = sessionService;
         this.passwordEncoder = passwordEncoder;
     }
 
-    public AuthResponse<AuthDto> getDataSession() {
-        AuthDto authDto = (AuthDto) session.getAttribute(AuthConstant.SESSION_USER);
-        return AuthResponse.success(authDto);
-    }
-
     public AuthResponse<Boolean> isAuthenticated() {
-        Object sessionUser = session.getAttribute(AuthConstant.SESSION_USER);
-        boolean stateAuth = (sessionUser != null);
-        return AuthResponse.success(stateAuth);
+        Boolean isAuth = this.sessionService.isAuthenticated();
+        return AuthResponse.success(isAuth);
     }
 
-    public void createSession(AuthDto authDto) {
-        session.setAttribute(AuthConstant.SESSION_USER, authDto);
-        session.setMaxInactiveInterval(AuthConstant.TIME_SESSION_USER);
+    public AuthResponse<AuthDto> getDataSession() {
+        AuthDto authDto = sessionService.getDataSession();
+        return AuthResponse.success(authDto);
     }
 
     public AuthResponse<AuthDto> login(LoginDto loginDto) {
         try {
+            if(this.sessionService.isAuthenticated()) {
+                return AuthResponse.error("L'utilisateur est déjà connecté");
+            }
+
             UserResponse<User> userResponse = this.userService.findByEmail(loginDto.getEmail());
             if(!userResponse.isSuccess()) {
                 return AuthResponse.error("Error");
@@ -52,11 +48,7 @@ public class AuthService {
             }
 
             AuthDto authDto = this.authMapper.toDto(user);
-            this.createSession(authDto);
-
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            String hashedPassword = encoder.encode(loginDto.getPassword());
-            System.out.println(hashedPassword);
+            this.sessionService.createSession(loginDto);
 
             return AuthResponse.success(authDto);
         }
@@ -67,9 +59,13 @@ public class AuthService {
 
     public AuthResponse<Void> logout() {
         try {
-            this.session.removeAttribute(AuthConstant.SESSION_USER);
+            if(!this.sessionService.isAuthenticated()) {
+                return AuthResponse.error("L'utilisateur n'est pas connecté");
+            }
+            this.sessionService.clearSession();
             return AuthResponse.success(null);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             return AuthResponse.error("Erreur lors de la déconnexion");
         }
     }

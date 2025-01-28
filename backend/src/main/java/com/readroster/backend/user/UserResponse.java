@@ -19,9 +19,7 @@ public class UserResponse<T> {
         return new UserResponse<>(null, false, message);
     }
 
-    public boolean isSuccess() {
-        return success;
-    }
+    public boolean isSuccess() { return success; }
 
     public String getMessage() {
         return message;

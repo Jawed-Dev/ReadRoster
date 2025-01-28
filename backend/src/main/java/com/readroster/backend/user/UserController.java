@@ -19,8 +19,8 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("auth/register")
-    public ResponseEntity<UserResponse<User>> register(@RequestBody User user) {
-        UserResponse<User> userResponse = this.userService.register(user);
+    public ResponseEntity<UserResponse<UserDto>> register(@RequestBody User user) {
+        UserResponse<UserDto> userResponse = this.userService.register(user);
         if(!userResponse.isSuccess()) {
             return ResponseEntity.badRequest().body(userResponse);
         }

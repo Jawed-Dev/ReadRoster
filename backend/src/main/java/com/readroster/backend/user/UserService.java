@@ -1,8 +1,5 @@
 package com.readroster.backend.user;
-import com.readroster.backend.auth.AuthDto;
-import com.readroster.backend.auth.AuthResponse;
-import com.readroster.backend.auth.LoginDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.readroster.backend.auth.SessionService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
@@ -11,10 +8,14 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
+    private final SessionService sessionService;
 
-    UserService(UserRepository userRepository, UserMapper userMapper) {
+    UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder, SessionService sessionService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
+        this.sessionService = sessionService;
     }
 
     public UserResponse<User> findByEmail(String email) {
@@ -25,19 +26,26 @@ public class UserService {
                     .orElse(UserResponse.error("Not found"));
         }
         catch (Exception e) {
-            return UserResponse.error("An unexpected error occurred");
+            return UserResponse.error("Error findByEmail");
         }
     }
 
-    public UserResponse<User> register(User user) {
+    public UserResponse<UserDto> register(User user) {
         try {
-            Optional<User> userOptional = Optional.of(userRepository.save(user));
-            return userOptional
-                    .map(UserResponse::success)
-                    .orElse(UserResponse.error("Error register"));
+            if(this.sessionService.isAuthenticated()) {
+                return UserResponse.error("L'utilisateur est connecté");
+            }
+
+            String hashedPassword = this.passwordEncoder.encode(user.getPassword());
+            user.setPassword(hashedPassword);
+
+            User savedUser = userRepository.save(user);
+
+            UserDto userDto = userMapper.toDto(savedUser);
+            return UserResponse.success(userDto);
         }
         catch (Exception e) {
-            return UserResponse.error("Error");
+            return UserResponse.error("Error ");
         }
     }
 }

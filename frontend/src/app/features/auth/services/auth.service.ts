@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, tap } from 'rxjs';
+import { Observable, BehaviorSubject, tap, map } from 'rxjs';
 import { AuthResponse, LoginCredentials, AuthDto, RegisterCredentials } from '../models/auth.model';
 import { environment } from '@env/environment';
 
@@ -11,6 +11,12 @@ import { environment } from '@env/environment';
 export class AuthService {
   private baseUrl = environment.apiUrlAuth;
   isAuthenticated$ = new BehaviorSubject<boolean>(false);
+  private userSubject = new BehaviorSubject<AuthDto | null>(null);
+  
+  user$ = this.userSubject.asObservable();
+  firstName$ = this.userSubject.pipe(
+    map((user: AuthDto | null) => user?.firstName ?? '')
+  );
 
   constructor(private http: HttpClient) {
     this.getAuthState();

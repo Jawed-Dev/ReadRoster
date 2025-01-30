@@ -2,7 +2,6 @@ package com.readroster.backend.auth;
 import com.readroster.backend.user.User;
 import com.readroster.backend.user.UserResponse;
 import com.readroster.backend.user.UserService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +32,7 @@ public class AuthService {
 
     public AuthResponse<AuthDto> login(LoginDto loginDto) {
         try {
+
             if(this.sessionService.isAuthenticated()) {
                 return AuthResponse.error("L'utilisateur est déjà connecté");
             }
@@ -51,6 +51,7 @@ public class AuthService {
             this.sessionService.createSession(loginDto);
 
             return AuthResponse.success(authDto);
+
         }
         catch (Exception e) {
             return AuthResponse.error("Error");

@@ -2,7 +2,7 @@
   <div class="">
     <h2>
       <ng-container *ngIf="isAuthenticated$ | async; else loginTitle">
-        Mon Compte
+        Bienvenue {{ firstName$ | async | json }}
       </ng-container>
       <ng-template #loginTitle>
         Connexion
@@ -45,6 +45,8 @@
         Se déconnecter
       </app-button>
     </div>
+
+    <a href="/inscription">S'inscrire</a>
   
     <p *ngIf="message" class="bg-slate-400 mt-2 p-1 w-fit" [class.error]="message.includes('Erreur')">
       {{ message }}

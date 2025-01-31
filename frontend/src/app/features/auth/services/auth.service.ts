@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, tap, map } from 'rxjs';
+import { Observable, BehaviorSubject, tap } from 'rxjs';
 import { AuthResponse, LoginCredentials, AuthDto, RegisterCredentials } from '../models/auth.model';
 import { environment } from '@env/environment';
 
@@ -11,12 +11,9 @@ import { environment } from '@env/environment';
 export class AuthService {
   private baseUrl = environment.apiUrlAuth;
   isAuthenticated$ = new BehaviorSubject<boolean>(false);
-  private userSubject = new BehaviorSubject<AuthDto | null>(null);
-  
-  user$ = this.userSubject.asObservable();
-  firstName$ = this.userSubject.pipe(
-    map((user: AuthDto | null) => user?.firstName ?? '')
-  );
+
+  private currentUserSubject = new BehaviorSubject<AuthDto | null>(null);
+  public currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) {
     this.getAuthState();
@@ -35,6 +32,17 @@ export class AuthService {
     });
   }
 
+  getCurrentUser(): Observable<AuthResponse<AuthDto>> {
+    return this.http.get<AuthResponse<AuthDto>>(`${this.baseUrl}/user/data`, {
+      withCredentials: true
+    }).pipe(
+      tap(response => {
+        this.currentUserSubject.next(response.data);
+        console.log('Current user:', response.data);
+      })
+    );
+  }
+
   login(credentials: LoginCredentials): Observable<AuthResponse<AuthDto>> {
     return this.http.post<AuthResponse<AuthDto>>(`${this.baseUrl}/login`, credentials, {
       withCredentials: true,
@@ -45,12 +53,14 @@ export class AuthService {
       tap(response => {
         if (response.success) {
           this.isAuthenticated$.next(true);
+          this.getCurrentUser().subscribe(); 
         }
       })
     );
   }
 
   isAuthenticated(): Observable<AuthResponse<boolean>> {
+    this.getCurrentUser().subscribe(); 
     return this.http.get<AuthResponse<boolean>>(`${this.baseUrl}/isAuth`, {
       withCredentials: true
     });

@@ -1,11 +1,13 @@
 import { AuthService } from '../../services/auth.service';
-import { LoginCredentials } from '../../models/auth.model';
+import { AuthDto, LoginCredentials } from '../../models/auth.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { ButtonComponent } from '@shared/components/button';
 import { InputComponent } from '@shared/components/input';
-import { Component, EventEmitter, Output } from '@angular/core'; 
+import { Component, EventEmitter, Output } from '@angular/core';
+
+
 
 @Component({
   selector: 'app-login-forms',
@@ -28,9 +30,11 @@ export class LoginFormsComponent {
   };
   message: string = '';
   isAuthenticated$: Observable<boolean>; 
-  
+  user: AuthDto | null | undefined;
+
   constructor(private authService: AuthService) {
     this.isAuthenticated$ = this.authService.isAuthenticated$;  
+    this.authService.currentUser$.subscribe(user => this.user = user);
   }
 
   onSubmit(): void {

@@ -26,4 +26,14 @@ public class UserController {
         }
         return ResponseEntity.ok(userResponse);
     }
+
+    @GetMapping("auth/user/data")
+    public ResponseEntity<UserResponse<UserDto>> getDataUser() {
+        System.out.println("DEBUT");
+        UserResponse<UserDto> userResponse = this.userService.getDataUser();
+        if(!userResponse.isSuccess()) {
+            return ResponseEntity.badRequest().body(userResponse);
+        }
+        return ResponseEntity.ok(userResponse);
+    }
 }

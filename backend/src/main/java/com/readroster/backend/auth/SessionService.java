@@ -16,7 +16,13 @@ public class SessionService {
     }
 
     public AuthDto getDataSession() {
-        return (AuthDto) session.getAttribute(AuthConstant.SESSION_USER);
+        try {
+            return (AuthDto) session.getAttribute(AuthConstant.SESSION_USER);
+        }
+        catch (Exception e) {
+           System.out.println(e);
+        }
+        return null;
     }
 
     public <T> void createSession(T data) {

@@ -2,7 +2,6 @@
   <div class="">
     <h2>
       <ng-container *ngIf="isAuthenticated$ | async; else loginTitle">
-        Bienvenue {{ firstName$ | async | json }}
       </ng-container>
       <ng-template #loginTitle>
         Connexion
@@ -35,10 +34,13 @@
         [disabled]="!credentials.email || !credentials.password">
         Se connecter
       </app-button>
+
+      <a class="flex" href="/inscription">S'inscrire</a>
     </form>
   
     <!-- When user is connected -->
     <div *ngIf="isAuthenticated$ | async">
+      <p> Bienvenue {{ user?.firstName }} </p>
       <app-button 
         variant="secondary"
         (buttonClick)="onLogout()">
@@ -46,7 +48,7 @@
       </app-button>
     </div>
 
-    <a href="/inscription">S'inscrire</a>
+    
   
     <p *ngIf="message" class="bg-slate-400 mt-2 p-1 w-fit" [class.error]="message.includes('Erreur')">
       {{ message }}

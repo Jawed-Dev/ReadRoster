@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BooksModule } from '@features/books/books.module';
-import { BooksService } from '@features/books/services/books.service';
+import { BooksService } from '@features/books/books.service';
 
 @Component({
   selector: 'app-dashboard-page',

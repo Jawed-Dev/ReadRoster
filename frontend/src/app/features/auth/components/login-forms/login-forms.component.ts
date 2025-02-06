@@ -1,5 +1,5 @@
-import { AuthService } from '../../services/auth.service';
-import { AuthDto, LoginCredentials } from '../../models/auth.model';
+import { AuthService } from '../../auth.service';
+import { AuthDto, LoginCredentials } from '../../auth.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { catchError, map, Observable, of } from 'rxjs';

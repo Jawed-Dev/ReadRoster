@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, tap } from 'rxjs';
-import { AuthResponse, LoginCredentials, AuthDto, RegisterCredentials } from '../models/auth.model';
+import { AuthResponse, LoginCredentials, AuthDto, RegisterCredentials } from './auth.model';
 import { environment } from '@env/environment';
 
 

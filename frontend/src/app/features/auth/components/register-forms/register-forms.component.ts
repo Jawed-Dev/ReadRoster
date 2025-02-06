@@ -1,4 +1,4 @@
-import { RegisterCredentials } from '../../models/auth.model';
+import { RegisterCredentials } from '../../auth.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from '@shared/components/button';

@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BooksModule } from '@features/books/books.module';
 import { BooksService } from '@features/books/books.service';
 
 @Component({
@@ -11,7 +10,6 @@ import { BooksService } from '@features/books/books.service';
   imports: [
     CommonModule,
     FormsModule,
-    BooksModule
   ]
 })
 

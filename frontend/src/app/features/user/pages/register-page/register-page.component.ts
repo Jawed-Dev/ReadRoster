@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthBannerComponent } from '@features/auth/components/auth-banner/auth-banner.component';
-import { RegisterFormsComponent } from '@features/auth/components/register-forms/register-forms.component';
+import { RegisterFormsComponent } from '@features/user/components/register-forms/register-forms.component';
 import { RegisterCredentials } from '@features/auth/auth.model';
 import { AuthService } from '@features/auth/auth.service';
 

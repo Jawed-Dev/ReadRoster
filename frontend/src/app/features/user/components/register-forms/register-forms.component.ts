@@ -1,9 +1,9 @@
-import { RegisterCredentials } from '../../../auth/auth.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from '@shared/components/button';
 import { InputComponent } from '@shared/components/input';
 import { Component, EventEmitter, Input, Output } from '@angular/core'; 
+import { RegisterCredentials } from '@features/user/user.model';
 
 @Component({
   selector: 'app-register-forms',

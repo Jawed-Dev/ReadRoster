@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AuthBannerComponent } from '@features/auth/components/auth-banner/auth-banner.component';
 import { RegisterFormsComponent } from '@features/user/components/register-forms/register-forms.component';
-import { RegisterCredentials } from '@features/auth/auth.model';
-import { AuthService } from '@features/auth/auth.service';
+import { BannerComponent } from '@features/user/components/banner/banner.component';
+import { UserService } from '@features/user/user.service';
+import { RegisterCredentials } from '@features/user/user.model';
 
 @Component({
   selector: 'app-register-page',
@@ -14,16 +14,16 @@ import { AuthService } from '@features/auth/auth.service';
     CommonModule,
     FormsModule,
     RegisterFormsComponent,
-    AuthBannerComponent
+    BannerComponent
   ]
 })
 
 export class RegisterPageComponent {
-  constructor(private authService: AuthService) {}
+  constructor(private UserService: UserService) {}
   message: string = '';
   
   handleRegister(credentials: RegisterCredentials): void {
-    this.authService.register(credentials).subscribe({
+    this.UserService.register(credentials).subscribe({
       next: (response) => {
         this.message = 'Inscription réussie !';
         console.log('Réponse:', response);

@@ -10,6 +10,7 @@ import { RegisterCredentials } from '@features/user/user.model';
   selector: 'app-register-page',
   templateUrl: './register-page.component.html',
   standalone: true,
+  providers: [UserService],
   imports: [
     CommonModule,
     FormsModule,

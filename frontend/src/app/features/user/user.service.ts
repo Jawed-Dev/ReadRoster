@@ -4,15 +4,11 @@ import { UserDto, UserResponse, RegisterCredentials } from "./user.model";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class UserService {
     private baseUrl = environment.apiUrlAuth;
 
-    constructor(private http: HttpClient) {
-        // this.getAuthState();
-    }
+    constructor(private http: HttpClient) { }
 
     register(credentials: RegisterCredentials): Observable<UserResponse<UserDto>> {
         return this.http.post<UserResponse<UserDto>>(`${this.baseUrl}/register`, credentials, {

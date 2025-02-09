@@ -4,7 +4,19 @@
             <p>TEST</p>
             <div *ngFor="let book of books">
                 {{ book.title }} - {{ book.author }}
-              </div>
+            </div>
+
+            <form class="flex flex-col w-[200px]">
+                <label for="search-book">Recherche</label>
+                <app-input
+                    id="email"
+                    type="text"
+                ></app-input>
+                <button>Rechercher</button>
+            </form>
+            
         </div>
+
+        
     </body>
 </main>

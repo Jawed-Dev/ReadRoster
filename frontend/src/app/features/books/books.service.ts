@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class BooksService {
+
+
     getBooks() {
         return [
             { title: 'Book 1' },
@@ -11,4 +11,5 @@ export class BooksService {
             { title: 'Book 3' }
         ];
     }
+    
 }

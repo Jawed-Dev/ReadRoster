@@ -4,8 +4,8 @@ import { FormsModule } from "@angular/forms";
 
 
 @Component({
-    selector: 'app-auth-banner',
-    templateUrl: './auth-banner.component.html',
+    selector: 'app-banner',
+    templateUrl: './banner.component.html',
     standalone: true, 
     imports: [
         CommonModule,

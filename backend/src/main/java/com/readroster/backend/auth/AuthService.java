@@ -12,7 +12,8 @@ public class AuthService {
     private final SessionService sessionService;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthService(UserService userService, AuthMapper authMapper, SessionService sessionService, PasswordEncoder passwordEncoder) {
+    public AuthService(UserService userService, AuthMapper authMapper,
+                       SessionService sessionService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.authMapper = authMapper;
         this.sessionService = sessionService;

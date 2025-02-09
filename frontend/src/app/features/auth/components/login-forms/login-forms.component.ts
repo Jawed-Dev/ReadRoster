@@ -13,6 +13,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
   selector: 'app-login-forms',
   templateUrl: './login-forms.component.html',
   standalone: true, 
+  providers: [AuthService],
   imports: [
     CommonModule,
     FormsModule,

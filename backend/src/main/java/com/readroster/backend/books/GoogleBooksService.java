@@ -1,7 +1,9 @@
 package com.readroster.backend.books;
 
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+@Service
 public class GoogleBooksService {
     private final WebClient webClient;
     private final String GOOGLE_BOOKS_API_URL = "https://www.googleapis.com/books/v1/volumes";

@@ -36,11 +36,11 @@ export class DashboardPageComponent {
   }
 
   loadBooks() {
-    this.http.post<BooksResponse<String>>(`${this.apiUrl}/search`, {})
+    this.http.post<string>(`${this.apiUrl}/search`, {})
       .subscribe({
         next: (response) => {
           console.log(response);
-          const parsedData = JSON.parse(response.data); 
+          const parsedData = JSON.parse(response); // parse directement la réponse
           this.booksSubject.next(parsedData);
         },
         error: (error) => {

@@ -21,6 +21,7 @@ public class GoogleBooksService {
                         .queryParam("q", title)
                         .build())
                 .retrieve()
-                .toString(); // Version simple sans Mono
+                .bodyToMono(String.class)  // Convertit la réponse en String
+                .block();  // Attend et retourne le résultat
     }
 }

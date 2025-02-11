@@ -16,10 +16,12 @@ public class BooksController {
 
     @PostMapping("search")
     public ResponseEntity<String> searchByTitle() {
-        String jsonResponse = "{\"data\": \"" + this.booksService.searchByTitle("Tintin") + "\"}";
+        String jsonBooks = this.booksService.searchByTitle("Tintin");
+        System.out.println("Type of jsonBooks: " + jsonBooks.getClass());
+        System.out.println("Content of jsonBooks: " + jsonBooks);
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(jsonResponse);
+                .body(jsonBooks);
     }
 
 }

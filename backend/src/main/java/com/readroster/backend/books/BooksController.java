@@ -17,6 +17,8 @@ public class BooksController {
 
     @PostMapping("search")
     public ResponseEntity<String> searchByTitle(@RequestBody BooksDto booksDto) {
+
+        System.out.println("titre du livre recherche : " + booksDto.getTitle());
         String jsonBooks = this.booksService.searchByTitle(booksDto);
         System.out.println("Type of jsonBooks: " + jsonBooks.getClass());
         System.out.println("Content of jsonBooks: " + jsonBooks);

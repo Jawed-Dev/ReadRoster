@@ -23,8 +23,8 @@ public class GoogleBooksService {
             return webClient
                     .get()
                     .uri(uriBuilder -> uriBuilder
-                            .queryParam("q", "Naruto")
-                            .queryParam("maxResults", "40")
+                            .queryParam("q", title)
+                            .queryParam("maxResults", "20")
                             .build())
                     .retrieve()
                     .bodyToMono(String.class)

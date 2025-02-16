@@ -15,13 +15,25 @@ public class GoogleBooksService {
     }
 
     public String searchBooksByTitle(String title) {
-        return webClient
-                .get()
-                .uri(uriBuilder -> uriBuilder
-                        .queryParam("q", title)
-                        .build())
-                .retrieve()
-                .bodyToMono(String.class)  // Convertit la réponse en String
-                .block();  // Attend et retourne le résultat
+        if (title == null || title.trim().isEmpty()) {
+            throw new IllegalArgumentException("Le titre de recherche ne peut pas être vide");
+        }
+
+        try {
+            return webClient
+                    .get()
+                    .uri(uriBuilder -> uriBuilder
+                            .queryParam("q", "Naruto")
+                            .queryParam("maxResults", "40")
+                            .build())
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+        }
+
+        catch (Exception e) {
+            System.err.println("Erreur inattendue: " + e.getMessage());
+            throw new RuntimeException("Erreur lors de la recherche de livres", e);
+        }
     }
 }

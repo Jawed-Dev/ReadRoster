@@ -1,19 +1,27 @@
 <main>
     <body class="flex justify-center h-screen">
-        <div class="app-dashboard-page flex flex-col w-full">
-            <p>TEST</p>
-            <div *ngFor="let book of books">
-                {{ book.title }} - {{ book.author }}
-            </div>
+        <div class="app-dashboard-page flex flex-col w-full justify-center items-center">
 
-            <form class="flex flex-col w-[200px]">
-                <label for="search-book">Recherche</label>
+            <form class="flex flex-col">
+                <label class="text-center" for="search-book">Titre de votre livre</label>
                 <app-input
                     id="email"
                     type="text"
                 ></app-input>
-                <button (click)="onSearch()">Rechercher</button>
+                <button class="bg-slate-300 rounded-sm" (click)="loadBooks()">Rechercher</button>
             </form>
+
+            <div *ngIf="!isLoading">
+                <div *ngFor="let book of books$ | async">
+                    <div class="book-card">
+                        <img [src]="book.volumeInfo?.imageLinks?.thumbnail" 
+                             [alt]="book.volumeInfo?.title"
+                             onerror="this.src='assets/placeholder.jpg'">
+                        <h3>{{ book.volumeInfo?.title }}</h3>
+                        <p>{{ book.volumeInfo?.authors?.join(', ') }}</p>
+                    </div>
+                </div>
+            </div>
             
         </div>
 

@@ -29,6 +29,7 @@ export class LoginFormsComponent {
     email: '',
     password: ''
   };
+  
   message: string = '';
   isAuthenticated$: Observable<boolean>; 
   user: AuthDto | null | undefined;

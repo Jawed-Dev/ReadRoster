@@ -1,5 +1,7 @@
 export interface BooksDto {
-    idGoogle : number;
+    title : string;
+    idGoogle : string;
+    authors : string;
 }
 
 export interface BooksResponse<T> {

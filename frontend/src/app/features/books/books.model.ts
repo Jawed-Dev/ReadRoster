@@ -4,6 +4,10 @@ export interface BooksDto {
     authors : string;
 }
 
+export interface SearchDto {
+    title: string;
+}
+
 export interface BooksResponse<T> {
     success: boolean;
     errorMessage: string | null;

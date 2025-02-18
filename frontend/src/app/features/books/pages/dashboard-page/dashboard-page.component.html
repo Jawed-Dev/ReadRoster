@@ -7,7 +7,7 @@
                 <app-input
                     id="search-book"
                     type="text"
-                    [(value)]="searchValue"
+                    [(value)]="searchDto.title"
                     name="search"
                 ></app-input>
                 <button class="bg-slate-300 rounded-sm" (click)="loadBooks()">Rechercher</button>

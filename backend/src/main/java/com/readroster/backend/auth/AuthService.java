@@ -31,8 +31,8 @@ public class AuthService {
     }
 
     public AuthResponse<AuthDto> login(LoginDto loginDto) {
-        try {
 
+        try {
             if(this.sessionService.isAuthenticated()) {
                 return AuthResponse.error("L'utilisateur est déjà connecté");
             }

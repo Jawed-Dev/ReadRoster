@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { environment } from '@env/environment';
-import { BooksDto, BooksResponse } from '@features/books/books.model';
+import { BooksDto, BooksResponse, SearchDto } from '@features/books/books.model';
 import { BooksService } from '@features/books/books.service';
 import { InputComponent } from '@shared/components/input';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -20,48 +20,26 @@ import { BehaviorSubject } from 'rxjs';
   ]
 })
 
-export class DashboardPageComponent{
-  private booksSubject = new BehaviorSubject<any[]>([]);
-  books$ = this.booksSubject.asObservable();  
-  searchValue: string = '';
+export class DashboardPageComponent {
+  books$: Observable<any[]>;  
   isLoading: boolean = false;
-  private apiUrl = environment.apiUrlAuth;
+  searchDto: SearchDto = {
+    title: ''
+  };
 
-  constructor(private booksService: BooksService, private http: HttpClient) {}
-
-  loadBooks() {
-    this.http.post<any>(`${this.apiUrl}/search`, {
-      title: this.searchValue
-    })
-      .subscribe({
-        next: (response) => {
-          console.log('Response type:', typeof response);
-          console.log('Response structure:', response);
-          alert(this.searchValue);
-          if (response.items) {
-            this.booksSubject.next(response.items);
-          } 
-        },
-        error: (error) => {
-          console.error('Erreur lors du chargement des livres:', error);
-          this.booksSubject.next([]);
-        }
-      });
+  constructor(private booksService: BooksService) {
+    this.books$ = this.booksService.books$;  
   }
 
-  // onSearch() {
-  //   if (this.searchValue.trim()) {
-  //     this.isLoading = true;
-  //     this.booksService.searchBooks(this.searchValue).subscribe({
-  //       next: (response) => {
-  //         this.isLoading = false;
-  //         this.booksSubject.next(response.data);
-  //       },
-  //       error: (error) => {
-  //         console.error('Erreur lors de la recherche:', error);
-  //         this.isLoading = false;
-  //       }
-  //     });
-  //   }
-  // }
+  loadBooks() {
+    this.isLoading = true;
+    this.booksService.searchBooks(this.searchDto).subscribe({
+      next: () => {
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+      }
+    });
+  }
 }

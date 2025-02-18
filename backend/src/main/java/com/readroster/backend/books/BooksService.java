@@ -12,11 +12,13 @@ public class BooksService {
         this.googleBooksService = googleBooksService;
     }
 
-    public String searchByTitle(BooksDto booksDto) {
-        //List<Books> books = this.booksRepository.findById(1);
-        String jsonBooks = this.googleBooksService.searchBooksByTitle(booksDto.getTitle());
-        System.out.println(jsonBooks);
-        return jsonBooks;
-        //BooksResponse.success(null);
+    public BooksResponse<String> searchByTitle(SearchDto searchDto) {
+        try {
+            String jsonBooks = this.googleBooksService.searchBooksByTitle(searchDto.getTitle());
+            return BooksResponse.success(jsonBooks);
+        }
+        catch (Exception e) {
+            return BooksResponse.error("Erreur sur la recherche de livre");
+        }
     }
 }

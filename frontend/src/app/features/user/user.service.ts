@@ -10,8 +10,8 @@ export class UserService {
 
     constructor(private http: HttpClient) { }
 
-    register(credentials: RegisterCredentials): Observable<UserResponse<UserDto>> {
-        return this.http.post<UserResponse<UserDto>>(`${this.baseUrl}/register`, credentials, {
+    register(credentials: RegisterCredentials): Observable<UserDto> {
+        return this.http.post<UserDto>(`${this.baseUrl}/register`, credentials, {
           withCredentials: true,
           headers: {
             'Content-Type': 'application/json'

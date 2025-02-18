@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/books")
 public class BooksController {
     private final BooksService booksService;
 
@@ -16,15 +16,11 @@ public class BooksController {
     }
 
     @PostMapping("search")
-    public ResponseEntity<String> searchByTitle(@RequestBody BooksDto booksDto) {
-
-        System.out.println("titre du livre recherche : " + booksDto.getTitle());
-        String jsonBooks = this.booksService.searchByTitle(booksDto);
-        System.out.println("Type of jsonBooks: " + jsonBooks.getClass());
-        System.out.println("Content of jsonBooks: " + jsonBooks);
+        public ResponseEntity<String> searchByTitle(@RequestBody SearchDto searchDto) {
+        BooksResponse<String> booksResponse = this.booksService.searchByTitle(searchDto);
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(jsonBooks);
+                .body(booksResponse.getData());
     }
 
 }

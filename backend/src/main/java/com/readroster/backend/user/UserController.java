@@ -19,21 +19,20 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("auth/register")
-    public ResponseEntity<UserResponse<UserDto>> register(@RequestBody User user) {
+    public ResponseEntity<UserDto> register(@RequestBody User user) {
         UserResponse<UserDto> userResponse = this.userService.register(user);
         if(!userResponse.isSuccess()) {
-            return ResponseEntity.badRequest().body(userResponse);
+            return ResponseEntity.badRequest().body(userResponse.getData());
         }
-        return ResponseEntity.ok(userResponse);
+        return ResponseEntity.ok(userResponse.getData());
     }
 
     @GetMapping("auth/user/data")
-    public ResponseEntity<UserResponse<UserDto>> getDataUser() {
-        System.out.println("DEBUT");
+    public ResponseEntity<UserDto> getDataUser() {
         UserResponse<UserDto> userResponse = this.userService.getDataUser();
         if(!userResponse.isSuccess()) {
-            return ResponseEntity.badRequest().body(userResponse);
+            return ResponseEntity.badRequest().body(userResponse.getData());
         }
-        return ResponseEntity.ok(userResponse);
+        return ResponseEntity.ok(userResponse.getData());
     }
 }

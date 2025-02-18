@@ -9,8 +9,8 @@ import { environment } from '@env/environment';
 export class AuthService {
   private baseUrl = environment.apiUrlAuth;
   isAuthenticated$ = new BehaviorSubject<boolean>(false);
-
   private currentUserSubject = new BehaviorSubject<AuthDto | null>(null);
+
   public currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) {
@@ -21,7 +21,7 @@ export class AuthService {
     this.isAuthenticated().subscribe({
       next: (response) => {
         console.log('Auth check response:', response);
-        this.isAuthenticated$.next(response.data);
+        this.isAuthenticated$.next(response);
       },
       error: (error) => {
         console.error('Auth check error:', error);
@@ -30,26 +30,26 @@ export class AuthService {
     });
   }
 
-  getCurrentUser(): Observable<AuthResponse<AuthDto>> {
-    return this.http.get<AuthResponse<AuthDto>>(`${this.baseUrl}/user/data`, {
+  getCurrentUser(): Observable<AuthDto> {
+    return this.http.get<AuthDto>(`${this.baseUrl}/user/data`, {
       withCredentials: true
     }).pipe(
       tap(response => {
-        this.currentUserSubject.next(response.data);
-        console.log('Current user:', response.data);
+        this.currentUserSubject.next(response);
+        console.log('Current user:', response);
       })
     );
   }
 
-  login(credentials: LoginCredentials): Observable<AuthResponse<AuthDto>> {
-    return this.http.post<AuthResponse<AuthDto>>(`${this.baseUrl}/login`, credentials, {
+  login(credentials: LoginCredentials): Observable<AuthDto> {
+    return this.http.post<AuthDto>(`${this.baseUrl}/login`, credentials, {
       withCredentials: true,
       headers: {
         'Content-Type': 'application/json'
       }
     }).pipe(
       tap(response => {
-        if (response.success) {
+        if (response) {
           this.isAuthenticated$.next(true);
           this.getCurrentUser().subscribe(); 
         }
@@ -57,15 +57,15 @@ export class AuthService {
     );
   }
 
-  isAuthenticated(): Observable<AuthResponse<boolean>> {
+  isAuthenticated(): Observable<boolean> {
     this.getCurrentUser().subscribe(); 
-    return this.http.get<AuthResponse<boolean>>(`${this.baseUrl}/isAuth`, {
+    return this.http.get<boolean>(`${this.baseUrl}/isAuth`, {
       withCredentials: true
     });
   }
 
-  logout(): Observable<AuthResponse<void>> {
-    return this.http.post<AuthResponse<void>>(`${this.baseUrl}/logout`, {}, {
+  logout(): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/logout`, {}, {
       withCredentials: true
     }).pipe(
       tap(() => {

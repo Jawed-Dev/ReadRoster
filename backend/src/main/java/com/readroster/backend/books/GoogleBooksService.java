@@ -6,29 +6,25 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Service
 public class GoogleBooksService {
     private final WebClient webClient;
-    private final String GOOGLE_BOOKS_API_URL = "https://www.googleapis.com/books/v1/volumes";
+    private static final String GOOGLE_BOOKS_API_URL = "https://www.googleapis.com/books/v1/volumes";
 
     public GoogleBooksService(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder
-                .baseUrl("https://www.googleapis.com/books/v1/volumes")
+                .baseUrl(GOOGLE_BOOKS_API_URL)
                 .build();
     }
 
     public String searchBooksByTitle(String title) {
-        if (title == null || title.trim().isEmpty()) {
-            throw new IllegalArgumentException("Le titre de recherche ne peut pas être vide");
-        }
-
         try {
             return webClient
-                    .get()
-                    .uri(uriBuilder -> uriBuilder
-                            .queryParam("q", title)
-                            .queryParam("maxResults", "20")
-                            .build())
-                    .retrieve()
-                    .bodyToMono(String.class)
-                    .block();
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .queryParam("q", title)
+                        .queryParam("maxResults", "20")
+                        .build())
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
         }
 
         catch (Exception e) {

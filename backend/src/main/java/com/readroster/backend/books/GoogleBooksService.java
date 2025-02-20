@@ -3,6 +3,8 @@ package com.readroster.backend.books;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.List;
+
 @Service
 public class GoogleBooksService {
     private final WebClient webClient;
@@ -14,7 +16,7 @@ public class GoogleBooksService {
                 .build();
     }
 
-    public String searchBooksByTitle(String title) {
+    /*public String searchBooksByTitle(String title) {
         try {
             return webClient
                 .get()
@@ -31,5 +33,19 @@ public class GoogleBooksService {
             System.err.println("Erreur inattendue: " + e.getMessage());
             throw new RuntimeException("Erreur lors de la recherche de livres", e);
         }
+    }*/
+
+    public List<GoogleBooksDto> searchBooksByTitle(String title) {
+        return webClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .queryParam("q", title)
+                        .queryParam("maxResults", "5")
+                        .build())
+                .retrieve()
+                .bodyToMono(GoogleBooksWrapper.class)
+                .map(GoogleBooksWrapper::getItems)
+                .block();
     }
+
 }

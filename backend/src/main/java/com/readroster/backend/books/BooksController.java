@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/books")
 public class BooksController {
@@ -16,8 +18,8 @@ public class BooksController {
     }
 
     @PostMapping("search")
-        public ResponseEntity<String> searchByTitle(@RequestBody SearchDto searchDto) {
-        BooksResponse<String> booksResponse = this.booksService.searchByTitle(searchDto);
+        public ResponseEntity<List<GoogleBooksDto>> searchByTitle(@RequestBody SearchPayload searchPayload) {
+        BooksResponse<List<GoogleBooksDto>> booksResponse = this.booksService.searchByTitle(searchPayload);
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(booksResponse.getData());

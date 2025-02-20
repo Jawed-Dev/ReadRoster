@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, catchError, Observable, tap, throwError } from "rxjs";
-import { BooksDto, BooksResponse, SearchDto } from "./books.model";
+import { GoogleBooksDto, SearchPayload } from "./books.model";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "@env/environment";
 
@@ -11,11 +11,12 @@ export class BooksService {
     private apiUrl = environment.apiUrlBooks;
     constructor(private http: HttpClient) {}
 
-    searchBooks(searchDto: SearchDto): Observable<any> {  
-        return this.http.post<any>(`${this.apiUrl}/search`, searchDto)
+    searchBooks(SearchPayload: SearchPayload): Observable<any> {  
+        return this.http.post<GoogleBooksDto[]>(`${this.apiUrl}/search`, SearchPayload)
             .pipe(
                 tap(response => {  
-                    if (response.items) this.booksSubject.next(response.items);
+                    console.log('Réponse de la recherche de livres:', response);
+                    if (response) this.booksSubject.next(response);
                 }),
                 catchError(error => {
                     console.error('Erreur lors du chargement des livres:', error);

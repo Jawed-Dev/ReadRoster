@@ -12,12 +12,21 @@ public class BooksService {
         this.googleBooksService = googleBooksService;
     }
 
-    public BooksResponse<String> searchByTitle(SearchDto searchDto) {
+    /*public BooksResponse<String> searchByTitle(SearchDto searchDto) {
         try {
             String jsonBooks = this.googleBooksService.searchBooksByTitle(searchDto.getTitle());
             return BooksResponse.success(jsonBooks);
         }
         catch (Exception e) {
+            return BooksResponse.error("Erreur sur la recherche de livre");
+        }
+    }*/
+
+    public BooksResponse<List<GoogleBooksDto>> searchByTitle(SearchPayload searchPayload) {
+        try {
+            List<GoogleBooksDto> books = googleBooksService.searchBooksByTitle(searchPayload.getTitle());                           // Bloque pour obtenir le résultat
+            return BooksResponse.success(books);
+        } catch (Exception e) {
             return BooksResponse.error("Erreur sur la recherche de livre");
         }
     }

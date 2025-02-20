@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { environment } from '@env/environment';
-import { BooksDto, BooksResponse, SearchDto } from '@features/books/books.model';
+import { GoogleBooksDto, SearchPayload } from '@features/books/books.model';
 import { BooksService } from '@features/books/books.service';
 import { InputComponent } from '@shared/components/input';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -23,7 +23,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class DashboardPageComponent {
   books$: Observable<any[]>;  
   isLoading: boolean = false;
-  searchDto: SearchDto = {
+  searchDto: SearchPayload = {
     title: ''
   };
 

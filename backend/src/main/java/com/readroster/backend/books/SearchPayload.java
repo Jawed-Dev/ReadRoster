@@ -1,6 +1,6 @@
 package com.readroster.backend.books;
 
-public class SearchDto {
+public class SearchPayload {
     private String title;
 
     public String getTitle() {

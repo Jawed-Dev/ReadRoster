@@ -1,15 +1,14 @@
-export interface BooksDto {
-    title : string;
-    idGoogle : string;
-    authors : string;
+export interface GoogleBooksDto {
+    id: string;
+    volumeInfo: {
+        title: string;
+        authors: string[];
+        imageLinks?: {
+            thumbnail: string;
+        };
+    };
 }
 
-export interface SearchDto {
+export interface SearchPayload {
     title: string;
 }
-
-export interface BooksResponse<T> {
-    success: boolean;
-    errorMessage: string | null;
-    data: T;
-  }

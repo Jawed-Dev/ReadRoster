@@ -13,17 +13,7 @@
                 <button class="bg-slate-300 rounded-sm" (click)="loadBooks()">Rechercher</button>
             </form>
 
-            <div *ngIf="!isLoading" class="max-h-52">
-                <div *ngFor="let book of books$ | async">
-                    <div class="book-card">
-                        <img [src]="book.volumeInfo?.imageLinks?.thumbnail" 
-                             [alt]="book.volumeInfo?.title"
-                             onerror="this.src='assets/placeholder.jpg'">
-                        <h3>{{ book.volumeInfo?.title }}</h3>
-                        <p>{{ book.volumeInfo?.authors?.join(', ') }}</p>
-                    </div>
-                </div>
-            </div>
+            <app-list-books-searched></app-list-books-searched>
             
         </div>
 

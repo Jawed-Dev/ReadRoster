@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from '@shared/components/button';
 import { InputComponent } from '@shared/components/input';
 import { Component, EventEmitter, Input, Output } from '@angular/core'; 
-import { RegisterCredentials } from '@features/user/user.model';
+import { RegisterPayload } from '@features/user/user.model';
 import { UserService } from '@features/user/user.service';
 
 @Component({
@@ -20,9 +20,9 @@ import { UserService } from '@features/user/user.service';
 })
 
 export class RegisterFormsComponent {
-  @Output() submitRegister = new EventEmitter<RegisterCredentials>(); 
+  @Output() submitRegister = new EventEmitter<RegisterPayload>(); 
   
-  credentials: RegisterCredentials = {
+  credentials: RegisterPayload = {
     firstName: '',
     lastName: '',
     email: '',

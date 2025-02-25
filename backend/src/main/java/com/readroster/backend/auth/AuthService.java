@@ -30,24 +30,24 @@ public class AuthService {
         return AuthResponse.success(authDto);
     }
 
-    public AuthResponse<AuthDto> login(LoginDto loginDto) {
+    public AuthResponse<AuthDto> login(LoginPayload loginPayload) {
 
         try {
             if(this.sessionService.isAuthenticated()) {
                 return AuthResponse.error("L'utilisateur est déjà connecté");
             }
 
-            UserResponse<User> userResponse = this.userService.findByEmail(loginDto.getEmail());
+            UserResponse<User> userResponse = this.userService.findByEmail(loginPayload.getEmail());
             if(!userResponse.isSuccess()) {
                 return AuthResponse.error("Error");
             }
 
             User user = userResponse.getData();
-            if(!this.passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
+            if(!this.passwordEncoder.matches(loginPayload.getPassword(), user.getPassword())) {
                 return AuthResponse.error("Credentials error");
             }
 
-            AuthDto authDto = this.authMapper.toDto(user);
+            AuthDto authDto = this.authMapper.userToDto(user);
             this.sessionService.createSession(authDto);
 
             return AuthResponse.success(authDto);
@@ -58,7 +58,7 @@ public class AuthService {
         }
     }
 
-    public AuthResponse<Void> logout() {
+    public AuthResponse<Boolean> logout() {
         try {
             if(!this.sessionService.isAuthenticated()) {
                 return AuthResponse.error("L'utilisateur n'est pas connecté");

@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { environment } from '@env/environment';
-import { GoogleBooksDto, SearchPayload } from '@features/books/books.model';
+import { SearchPayload } from '@features/books/books.model';
 import { BooksService } from '@features/books/books.service';
+import { ListBooksComponent } from '@features/books/components/list-books/list-books.component';
 import { InputComponent } from '@shared/components/input';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -16,16 +15,18 @@ import { BehaviorSubject, Observable } from 'rxjs';
   imports: [
     CommonModule,
     FormsModule,
-    InputComponent
+    InputComponent,
+    ListBooksComponent
   ]
 })
 
 export class DashboardPageComponent {
-  books$: Observable<any[]>;  
-  isLoading: boolean = false;
   searchDto: SearchPayload = {
     title: ''
   };
+
+  books$: Observable<any[]>;  
+  isLoading: boolean = false;
 
   constructor(private booksService: BooksService) {
     this.books$ = this.booksService.books$;  
@@ -42,4 +43,5 @@ export class DashboardPageComponent {
       }
     });
   }
+
 }

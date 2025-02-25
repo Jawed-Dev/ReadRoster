@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, tap } from 'rxjs';
-import { AuthResponse, LoginCredentials, AuthDto } from './auth.model';
+import { AuthResponse, LoginPayload, AuthDto } from './auth.model';
 import { environment } from '@env/environment';
 
 
@@ -41,7 +41,7 @@ export class AuthService {
     );
   }
 
-  login(credentials: LoginCredentials): Observable<AuthDto> {
+  login(credentials: LoginPayload): Observable<AuthDto> {
     return this.http.post<AuthDto>(`${this.baseUrl}/login`, credentials, {
       withCredentials: true,
       headers: {
@@ -64,8 +64,8 @@ export class AuthService {
     });
   }
 
-  logout(): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/logout`, {}, {
+  logout(): Observable<boolean> {
+    return this.http.post<boolean>(`${this.baseUrl}/logout`, {}, {
       withCredentials: true
     }).pipe(
       tap(() => {

@@ -12,8 +12,8 @@ public class AuthController {
     }
 
     @PostMapping("auth/login")
-    public ResponseEntity<AuthDto> login(@RequestBody LoginDto loginDto) {
-        AuthResponse<AuthDto> authResponse = this.authService.login(loginDto);
+    public ResponseEntity<AuthDto> login(@RequestBody LoginPayload loginPayload) {
+        AuthResponse<AuthDto> authResponse = this.authService.login(loginPayload);
         if(!authResponse.isSuccess()) {
             return ResponseEntity.badRequest().body(authResponse.getData());
         }
@@ -30,8 +30,8 @@ public class AuthController {
     }
 
     @PostMapping("auth/logout")
-    public ResponseEntity<Void> logout() {
-        AuthResponse<Void> authResponse = this.authService.logout();
+    public ResponseEntity<Boolean> logout() {
+        AuthResponse<Boolean> authResponse = this.authService.logout();
         if(!authResponse.isSuccess()) {
             return ResponseEntity.badRequest().body(authResponse.getData());
         }

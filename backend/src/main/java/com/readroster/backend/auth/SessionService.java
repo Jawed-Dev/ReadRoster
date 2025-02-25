@@ -20,7 +20,7 @@ public class SessionService {
             return (AuthDto) session.getAttribute(AuthConstant.SESSION_USER);
         }
         catch (Exception e) {
-           System.out.println(e);
+           System.out.println(e.getMessage());
         }
         return null;
     }

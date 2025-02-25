@@ -1,6 +1,5 @@
 package com.readroster.backend.user;
 import com.readroster.backend.auth.AuthDto;
-import com.readroster.backend.auth.AuthResponse;
 import com.readroster.backend.auth.SessionService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,7 +37,7 @@ public class UserService {
                 return UserResponse.error("Utilisateur non trouvé");
             }
 
-            UserDto userDto = this.userMapper.toDto(optionalUser.get());
+            UserDto userDto = this.userMapper.userToDto(optionalUser.get());
             System.out.println("UserDto : " + userDto);
             return UserResponse.success(userDto);
         }
@@ -59,18 +58,19 @@ public class UserService {
         }
     }
 
-    public UserResponse<UserDto> register(User user) {
+    public UserResponse<UserDto> register(RegisterPayload registerPayload) {
         try {
             if(this.sessionService.isAuthenticated()) {
                 return UserResponse.error("L'utilisateur est connecté");
             }
 
-            String hashedPassword = this.passwordEncoder.encode(user.getPassword());
-            user.setPassword(hashedPassword);
+            String hashedPassword = this.passwordEncoder.encode(registerPayload.getPassword());
+            registerPayload.setPassword(hashedPassword);
 
+            User user = userMapper.registerPayloadToUser(registerPayload);
             User savedUser = userRepository.save(user);
 
-            UserDto userDto = userMapper.toDto(savedUser);
+            UserDto userDto = userMapper.userToDto(savedUser);
             return UserResponse.success(userDto);
         }
         catch (Exception e) {

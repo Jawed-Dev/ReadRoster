@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RegisterFormsComponent } from '@features/user/components/register-forms/register-forms.component';
 import { BannerComponent } from '@features/user/components/banner/banner.component';
 import { UserService } from '@features/user/user.service';
-import { RegisterCredentials } from '@features/user/user.model';
+import { RegisterPayload } from '@features/user/user.model';
 
 @Component({
   selector: 'app-register-page',
@@ -23,7 +23,7 @@ export class RegisterPageComponent {
   constructor(private UserService: UserService) {}
   message: string = '';
   
-  handleRegister(credentials: RegisterCredentials): void {
+  handleRegister(credentials: RegisterPayload): void {
     this.UserService.register(credentials).subscribe({
       next: (response) => {
         this.message = 'Inscription réussie !';

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { environment } from '@env/environment';
-import { UserDto, UserResponse, RegisterCredentials } from "./user.model";
+import { UserDto, UserResponse, RegisterPayload } from "./user.model";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 
@@ -10,7 +10,7 @@ export class UserService {
 
     constructor(private http: HttpClient) { }
 
-    register(credentials: RegisterCredentials): Observable<UserDto> {
+    register(credentials: RegisterPayload): Observable<UserDto> {
         return this.http.post<UserDto>(`${this.baseUrl}/register`, credentials, {
           withCredentials: true,
           headers: {

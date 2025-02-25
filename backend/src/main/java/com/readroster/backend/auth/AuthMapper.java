@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AuthMapper {
-    public AuthDto toDto(User user) {
+    public AuthDto userToDto(User user) {
         AuthDto authDto = new AuthDto();
         authDto.setEmail(user.getEmail());
         authDto.setFirstName(user.getFirstName());

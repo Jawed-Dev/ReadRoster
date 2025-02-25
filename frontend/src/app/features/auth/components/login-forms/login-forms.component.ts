@@ -1,5 +1,5 @@
 import { AuthService } from '../../auth.service';
-import { AuthDto, LoginCredentials } from '../../auth.model';
+import { AuthDto, LoginPayload } from '../../auth.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { catchError, map, Observable, of } from 'rxjs';
@@ -23,9 +23,9 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 
 export class LoginFormsComponent {
-  @Output() submitLogin = new EventEmitter<LoginCredentials>(); 
+  @Output() submitLogin = new EventEmitter<LoginPayload>(); 
   
-  credentials: LoginCredentials = {
+  credentials: LoginPayload = {
     email: '',
     password: ''
   };

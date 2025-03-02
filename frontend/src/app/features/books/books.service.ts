@@ -11,7 +11,7 @@ export class BooksService {
     private apiUrl = environment.apiUrlBooks;
     constructor(private http: HttpClient) {}
 
-    searchBooks(SearchPayload: SearchPayload): Observable<any> {  
+    searchBooks(SearchPayload: SearchPayload): Observable<GoogleBooksDto[]> {  
         return this.http.post<GoogleBooksDto[]>(`${this.apiUrl}/search`, SearchPayload)
             .pipe(
                 tap(response => {  

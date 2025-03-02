@@ -7,7 +7,7 @@ import { Observable } from "rxjs";
 
 @Component({
     selector: 'app-list-books-searched',
-    templateUrl: './list-books.component.html',
+    templateUrl: './searched-books.component.html',
     standalone: true, 
     imports: [  
         CommonModule,
@@ -15,7 +15,7 @@ import { Observable } from "rxjs";
     ]   
 })
 
-export class ListBooksComponent {
+export class SearchedBooksComponent {
     books$: Observable<any[]>; 
     isLoading: boolean = false;
     searchDto: SearchPayload = {

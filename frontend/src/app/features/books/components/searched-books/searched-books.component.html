@@ -2,11 +2,11 @@
     <div *ngIf="!isLoading" class="max-h-52">
         <div *ngFor="let book of books$ | async">
             <div class="book-card">
-                <img [src]="book.volumeInfo?.imageLinks?.thumbnail" 
-                     [alt]="book.volumeInfo?.title"
+                <img [src]="book.volumeInfo.imageLinks?.thumbnail" 
+                     [alt]="book.volumeInfo.title"
                      onerror="this.src='assets/placeholder.jpg'">
-                <h3>{{ book.volumeInfo?.title }}</h3>
-                <p>{{ book.volumeInfo?.authors?.join(', ') }}</p>
+                <h3>{{ book.volumeInfo.title }}</h3>
+                <p>{{ book.volumeInfo.authors.join(', ') }}</p>
             </div>
         </div>
     </div>

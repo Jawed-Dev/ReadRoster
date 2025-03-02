@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SearchPayload } from '@features/books/books.model';
 import { BooksService } from '@features/books/books.service';
-import { ListBooksComponent } from '@features/books/components/list-books/list-books.component';
+import { SearchedBooksComponent } from '@features/books/components/searched-books/searched-books.component';
+import { ButtonComponent } from '@shared/components/button';
 import { InputComponent } from '@shared/components/input';
 import { Observable } from 'rxjs';
 
@@ -16,7 +17,8 @@ import { Observable } from 'rxjs';
     CommonModule,
     FormsModule,
     InputComponent,
-    ListBooksComponent
+    ButtonComponent,
+    SearchedBooksComponent
   ]
 })
 

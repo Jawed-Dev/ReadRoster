@@ -56,7 +56,7 @@ export class InputComponent {
   };
 
   getInputClasses(): string {
-    const baseClasses = 'block w-full px-4 py-2 rounded-md border ring-0 focus:ring-2 focus:ring-opacity-50 transition-colors duration-200 w-[300px] mb-2';
+    const baseClasses = 'block w-full px-1 py-1 rounded-md border ring-0 focus:ring-2 focus:ring-opacity-50 transition-colors duration-200 w-[300px] mb-2';
     const stateClasses = this.disabled ? 'bg-gray-100 cursor-not-allowed' : 'bg-white';
     const variantClass = this.variantClasses[this.variant];
     const errorClass = this.error ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : '';

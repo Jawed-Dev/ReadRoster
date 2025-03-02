@@ -10,13 +10,10 @@
                     [(value)]="searchDto.title"
                     name="search"
                 ></app-input>
-                <button class="bg-slate-300 rounded-sm" (click)="loadBooks()">Rechercher</button>
+                <app-button (click)="loadBooks()">Rechercher</app-button>
             </form>
-
             <app-list-books-searched></app-list-books-searched>
-            
         </div>
 
-        
     </body>
 </main>

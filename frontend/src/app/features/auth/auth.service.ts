@@ -5,7 +5,9 @@ import { AuthResponse, LoginPayload, AuthDto } from './auth.model';
 import { environment } from '@env/environment';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root' 
+})
 export class AuthService {
   private baseUrl = environment.apiUrlAuth;
   isAuthenticated$ = new BehaviorSubject<boolean>(false);

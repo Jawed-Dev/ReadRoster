@@ -20,8 +20,8 @@ import { AuthService } from '@features/auth/auth.service';
 })
 
 export class LoginPageComponent {
-  
   onLogin(credentials: LoginPayload): void {
     console.log('Connexion en cours...', credentials);
+
   }
 }

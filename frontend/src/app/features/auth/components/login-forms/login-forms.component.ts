@@ -6,6 +6,7 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { ButtonComponent } from '@shared/components/button';
 import { InputComponent } from '@shared/components/input';
 import { Component, EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 
@@ -34,7 +35,7 @@ export class LoginFormsComponent {
   isAuthenticated$: Observable<boolean>; 
   user: AuthDto | null | undefined;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
     this.isAuthenticated$ = this.authService.isAuthenticated$;  
     this.authService.currentUser$.subscribe(user => this.user = user);
   }
@@ -45,6 +46,7 @@ export class LoginFormsComponent {
         this.message = 'Connexion réussie !';
         this.submitLogin.emit(this.credentials); 
         console.log('Réponse:', response);
+        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
         this.message = 'Erreur de connexion';

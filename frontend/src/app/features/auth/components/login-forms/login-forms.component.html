@@ -1,15 +1,8 @@
 <section class="flex items-center justify-center h-full">
   <div class="">
-    <h2>
-      <ng-container *ngIf="isAuthenticated$ | async; else loginTitle">
-      </ng-container>
-      <ng-template #loginTitle>
-        Connexion
-      </ng-template>
-    </h2>
-  
-    <!-- When user is not connected -->
-    <form *ngIf="!(isAuthenticated$ | async)" (ngSubmit)="onSubmit()">
+    <h2> Connexion </h2>
+
+    <form (ngSubmit)="onSubmitConnexion()">
       <app-input
         id="email"
         type="email"
@@ -37,18 +30,7 @@
 
       <a class="flex" href="/inscription">S'inscrire</a>
     </form>
-  
-    <!-- When user is connected -->
-    <div *ngIf="isAuthenticated$ | async">
-      <p> Bienvenue {{ user?.firstName }} </p>
-      <app-button 
-        variant="secondary"
-        (buttonClick)="onLogout()">
-        Se déconnecter
-      </app-button>
-    </div>
-
-    
+      
   
     <p *ngIf="message" class="bg-slate-400 mt-2 p-1 w-fit" [class.error]="message.includes('Erreur')">
       {{ message }}

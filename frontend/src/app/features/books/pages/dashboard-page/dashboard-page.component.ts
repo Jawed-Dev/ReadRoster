@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '@features/auth/auth.service';
 import { SearchPayload } from '@features/books/books.model';
 import { BooksService } from '@features/books/books.service';
 import { SearchedBooksComponent } from '@features/books/components/searched-books/searched-books.component';
@@ -30,7 +31,7 @@ export class DashboardPageComponent {
   books$: Observable<any[]>;  
   isLoading: boolean = false;
 
-  constructor(private booksService: BooksService) {
+  constructor(private booksService: BooksService, private authService: AuthService) {
     this.books$ = this.booksService.books$;  
   }
 
@@ -45,5 +46,16 @@ export class DashboardPageComponent {
       }
     });
   }
+
+  onLogout(): void {
+    this.authService.logout().subscribe({
+      next: () => {
+        //this.message = 'Déconnexion réussie';
+      },
+      error: () => {
+        //this.message = 'Erreur lors de la déconnexion';
+      }
+    });
+} 
 
 }

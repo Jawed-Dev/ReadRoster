@@ -31,7 +31,7 @@ export class RegisterFormsComponent {
   };
   @Input() message: string = '';  
 
-  onSubmit(): void {
+  onSubmitInscription(): void {
     this.submitRegister.emit(this.credentials);
   }
 }

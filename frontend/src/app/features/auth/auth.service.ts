@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, tap } from 'rxjs';
-import { AuthResponse, LoginPayload, AuthDto } from './auth.model';
+import { LoginPayload, AuthDto } from './auth.model';
 import { environment } from '@env/environment';
 
 
@@ -12,9 +12,8 @@ export class AuthService {
   private baseUrl = environment.apiUrlAuth;
   isAuthenticated$ = new BehaviorSubject<boolean>(false);
   private currentUserSubject = new BehaviorSubject<AuthDto | null>(null);
-
   public currentUser$ = this.currentUserSubject.asObservable();
-
+  
   constructor(private http: HttpClient) {
     this.getAuthState();
   }
@@ -43,6 +42,13 @@ export class AuthService {
     );
   }
 
+  isAuthenticated(): Observable<boolean> {
+    this.getCurrentUser().subscribe(); 
+    return this.http.get<boolean>(`${this.baseUrl}/isAuth`, {
+      withCredentials: true
+    });
+  }
+
   login(credentials: LoginPayload): Observable<AuthDto> {
     return this.http.post<AuthDto>(`${this.baseUrl}/login`, credentials, {
       withCredentials: true,
@@ -59,13 +65,6 @@ export class AuthService {
     );
   }
 
-  isAuthenticated(): Observable<boolean> {
-    this.getCurrentUser().subscribe(); 
-    return this.http.get<boolean>(`${this.baseUrl}/isAuth`, {
-      withCredentials: true
-    });
-  }
-
   logout(): Observable<boolean> {
     return this.http.post<boolean>(`${this.baseUrl}/logout`, {}, {
       withCredentials: true
@@ -74,5 +73,5 @@ export class AuthService {
         this.isAuthenticated$.next(false);
       })
     );
-  }
+  }  
 }

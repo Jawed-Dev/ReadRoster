@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { environment } from '@env/environment';
-import { UserDto, UserResponse, RegisterPayload } from "./user.model";
+import { UserDto, RegisterPayload } from "./user.model";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 

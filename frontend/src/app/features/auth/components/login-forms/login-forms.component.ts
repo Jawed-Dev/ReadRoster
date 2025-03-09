@@ -28,25 +28,27 @@ export class LoginFormsComponent {
     email: '',
     password: ''
   };
-  
-  onSubmitConnexion(): void {
-    this.submitLogin.emit(this.credentials);
-  }
 
+  constructor(private authService: AuthService, private router: Router) {}
+  
   // onSubmitConnexion(): void {
-  //   this.authService.login(this.credentials).subscribe({
-  //     next: (response) => {
-  //       this.message = 'Connexion réussie !';
-  //       this.submitLogin.emit(this.credentials); 
-  //       console.log('Réponse:', response);
-  //       this.router.navigate(['/dashboard']);
-  //     },
-  //     error: (error) => {
-  //       this.message = 'Erreur de connexion';
-  //       console.error('Erreur:', error);
-  //     }
-  //   });
+  //   this.submitLogin.emit(this.credentials);
   // }
+
+  onSubmitConnexion(): void {
+    this.authService.login(this.credentials).subscribe({
+      next: (response) => {
+        this.message = 'Connexion réussie !';
+        this.submitLogin.emit(this.credentials); 
+        console.log('Réponse:', response);
+        this.router.navigate(['/dashboard']);
+      },
+      error: (error) => {
+        this.message = 'Erreur de connexion';
+        console.error('Erreur:', error);
+      }
+    });
+  }
 
   // onLogout(): void {
   //   this.authService.logout().subscribe({

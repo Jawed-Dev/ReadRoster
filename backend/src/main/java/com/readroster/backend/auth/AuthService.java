@@ -60,6 +60,7 @@ public class AuthService {
     public AuthResponse<Boolean> logout() {
         try {
             if(!this.sessionService.isAuthenticated()) {
+                System.out.println("Utilisateur non connecté");
                 return AuthResponse.error("L'utilisateur n'est pas connecté");
             }
             this.sessionService.clearSession();
@@ -69,6 +70,4 @@ public class AuthService {
             return AuthResponse.error("Erreur lors de la déconnexion");
         }
     }
-
-
 }

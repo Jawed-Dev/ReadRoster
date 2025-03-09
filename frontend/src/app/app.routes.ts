@@ -10,18 +10,18 @@ export const routes: Routes = [
     { 
       path: 'connexion', 
       component: LoginPageComponent,
-      canActivate: [AuthGuard]  
+      canActivate: [UnauthGuard]  
     },
     { 
       path: 'inscription', 
       component: RegisterPageComponent,
-      canActivate: [AuthGuard]  
+      canActivate: [UnauthGuard]  
     },
     { 
       path: 'dashboard', 
       component: DashboardPageComponent,
-      canActivate: [UnauthGuard]  
+      canActivate: [AuthGuard]  
     },
 
-    {path: '**', redirectTo: '/connexion'}
+    //{path: '**', redirectTo: '/connexion'}
 ];

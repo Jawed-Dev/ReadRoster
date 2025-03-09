@@ -43,9 +43,8 @@ export class AuthService {
   }
 
   isAuthenticated(): Observable<boolean> {
-    this.getCurrentUser().subscribe(); 
     return this.http.get<boolean>(`${this.baseUrl}/isAuth`, {
-      withCredentials: true
+      withCredentials: true 
     });
   }
 
@@ -58,6 +57,7 @@ export class AuthService {
     }).pipe(
       tap(response => {
         if (response) {
+          console.log('Login successful, setting isAuthenticated$ to true');
           this.isAuthenticated$.next(true);
           this.getCurrentUser().subscribe(); 
         }

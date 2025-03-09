@@ -8,6 +8,7 @@ import { SearchedBooksComponent } from '@features/books/components/searched-book
 import { ButtonComponent } from '@shared/components/button';
 import { InputComponent } from '@shared/components/input';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -31,7 +32,7 @@ export class DashboardPageComponent {
   books$: Observable<any[]>;  
   isLoading: boolean = false;
 
-  constructor(private booksService: BooksService, private authService: AuthService) {
+  constructor(private booksService: BooksService, private authService: AuthService, private router: Router) {
     this.books$ = this.booksService.books$;  
   }
 
@@ -50,12 +51,11 @@ export class DashboardPageComponent {
   onLogout(): void {
     this.authService.logout().subscribe({
       next: () => {
-        //this.message = 'Déconnexion réussie';
+        this.router.navigate(['/connexion']);
       },
       error: () => {
-        //this.message = 'Erreur lors de la déconnexion';
       }
     });
-} 
+  } 
 
 }

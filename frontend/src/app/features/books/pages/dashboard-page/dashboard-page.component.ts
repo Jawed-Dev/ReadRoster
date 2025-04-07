@@ -9,6 +9,7 @@ import { ButtonComponent } from '@shared/components/button';
 import { InputComponent } from '@shared/components/input';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { AppHeaderComponent } from '@core/header/app.header';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -20,7 +21,8 @@ import { Router } from '@angular/router';
     FormsModule,
     InputComponent,
     ButtonComponent,
-    SearchedBooksComponent
+    SearchedBooksComponent,
+    AppHeaderComponent
   ]
 })
 

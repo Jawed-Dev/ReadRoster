@@ -49,15 +49,4 @@ export class DashboardPageComponent {
       }
     });
   }
-
-  onLogout(): void {
-    this.authService.logout().subscribe({
-      next: () => {
-        this.router.navigate(['/connexion']);
-      },
-      error: () => {
-      }
-    });
-  } 
-
 }

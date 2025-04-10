@@ -1,12 +1,12 @@
 <section>
-    <div *ngIf="!isLoading" class="max-h-52">
+    <div *ngIf="!isLoading" class="flex">
         <div *ngFor="let book of books$ | async">
-            <div class="book-card">
+            <div class="flex flex-col items-center justify-center m-4 p-4 border rounded-lg shadow-md w-64 cursor-pointer">
                 <img [src]="book.volumeInfo.imageLinks?.thumbnail" 
                      [alt]="book.volumeInfo.title"
                      onerror="this.src='assets/placeholder.jpg'">
-                <h3>{{ book.volumeInfo.title }}</h3>
-                <p>{{ book.volumeInfo.authors.join(', ') }}</p>
+                <h3 class="max-w-64 font-medium truncate text-center px-2">{{ book.volumeInfo.title }}</h3>
+                <p class="max-w-64 truncate text-center">{{ book.volumeInfo.authors.join(', ') }}</p>
             </div>
         </div>
     </div>

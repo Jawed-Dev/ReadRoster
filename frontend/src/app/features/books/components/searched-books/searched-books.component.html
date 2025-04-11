@@ -1,12 +1,20 @@
 <section>
-    <div *ngIf="!isLoading" class="flex">
+    <div *ngIf="!isLoading" class="flex mt-5">
         <div *ngFor="let book of books$ | async">
-            <div class="flex flex-col items-center justify-center m-4 p-4 border rounded-lg shadow-md w-64 cursor-pointer">
-                <img [src]="book.volumeInfo.imageLinks?.thumbnail" 
+            <div class="relative flex flex-col items-center justify-center m-4 p-4 border rounded-lg shadow-md w-64">
+
+                <img class="cursor-pointer"
+                    [src]="book.volumeInfo.imageLinks?.thumbnail" 
                      [alt]="book.volumeInfo.title"
                      onerror="this.src='assets/placeholder.jpg'">
-                <h3 class="max-w-64 font-medium truncate text-center px-2">{{ book.volumeInfo.title }}</h3>
+
+                <h3 class="max-w-64 font-medium truncate text-center px-2 mt-5">{{ book.volumeInfo.title }}</h3>
                 <p class="max-w-64 truncate text-center">{{ book.volumeInfo.authors.join(', ') }}</p>
+
+                <app-drop-down-menu
+                    [itemId] = "book.id"
+                    [itemName] = "book.volumeInfo.title">
+                </app-drop-down-menu>
             </div>
         </div>
     </div>

@@ -3,6 +3,7 @@ import { Component } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { GoogleBooksDto, SearchPayload } from "@features/books/books.model";
 import { BooksService } from "@features/books/books.service";
+import { DropDownMenuComponent } from "@shared/components/book-drop-down-menu/book.drop-down-menu";
 import { Observable } from "rxjs";
 
 @Component({
@@ -11,12 +12,13 @@ import { Observable } from "rxjs";
     standalone: true, 
     imports: [  
         CommonModule,
-        FormsModule
+        FormsModule,
+        DropDownMenuComponent
     ]   
 })
 
 export class SearchedBooksComponent {
-    books$: Observable<any[]>; 
+    books$: Observable<any[]>; // changer le type
     isLoading: boolean = false;
     searchDto: SearchPayload = {
       title: ''

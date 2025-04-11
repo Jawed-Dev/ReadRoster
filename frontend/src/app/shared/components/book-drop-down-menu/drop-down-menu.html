@@ -1,0 +1,19 @@
+<div class="w-full flex justify-center" (click)="toggleMenu()">
+    <div class="flex justify-end w-full cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+    </div>
+    
+    <div *ngIf="isMenuOpen" 
+        class="absolute w-full right-0 bottom-[-110px] bg-white border border-gray-200 rounded-md shadow-lg"
+        (click)="$event.stopPropagation()"
+        clickOutside="closeMenu()">
+
+        <div *ngFor="let option of menuOptions" 
+            class="flex pl-[70px] items-center hover:bg-gray-200 cursor-pointer" (click)="option.checked = !option.checked">
+            <div class="flex items-center">
+                <input type="checkbox" [checked]="option.checked" />
+                <p class="pl-5"> {{ option.label }} </p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -9,10 +9,13 @@
         clickOutside="closeMenu()">
 
         <div *ngFor="let option of menuOptions" 
-            class="flex pl-[70px] items-center hover:bg-gray-200 cursor-pointer" (click)="option.checked = !option.checked">
+            class="flex pl-[70px] items-center hover:bg-gray-200 cursor-pointer" 
+            (click)="option.checked = !option.checked">
             <div class="flex items-center">
-                <input type="checkbox" [checked]="option.checked" />
+                <input type="checkbox" [checked]="option.checked" 
+                (click)="$event.stopPropagation()"/>
                 <p class="pl-5"> {{ option.label }} </p>
+                
             </div>
         </div>
     </div>

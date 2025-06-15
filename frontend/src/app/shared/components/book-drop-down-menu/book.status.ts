@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, map, Observable } from "rxjs";
+import { BehaviorSubject, map, Observable, of } from "rxjs";
 
 export class BookStatus {
     id: number;
@@ -31,39 +31,25 @@ export class BookStatusService {
 
     constructor() {}
 
-    getBookStatuses(bookId: string): Observable<BookStatus[]> {
-        return this.bookStatuses$.pipe(
-          map(statusMap => {
-            return statusMap[bookId] || 
-              this.defaultStatuses.map(status => 
-                new BookStatus(status.id, status.label, false)
-              );
-          })
-        );
-      }
+    readonly statusOptions = [
+        {id: 1, label: 'Favori'},
+        {id: 2, label: 'Lu'},
+        {id: 3, label: 'A lire'},
+        {id: 4, label: 'En cours de lecture'}
+    ];
 
-    updateBookStatus(bookId: string, statusId: number, checked: boolean): void {
-        const currentStatusMap = this.statusSubject.getValue();
-        const defaultStatuses = this.defaultStatuses.map(status => 
-            new BookStatus(status.id, status.label, false)
-        );
-        let bookStatuses = currentStatusMap[bookId] || [...defaultStatuses];
-
-        const statusIndex = bookStatuses.findIndex(status => status.id === statusId);
-        if (statusIndex !== -1) bookStatuses[statusIndex].checked = checked;
-        const newStatusMap = {
-            ...currentStatusMap,
-            [bookId]: bookStatuses
-        };
-        this.statusSubject.next(newStatusMap);
-        
-        // Ici, ajouter une sauvegarde en base de données
-        // this.saveToDatabase(bookId, statusId, checked);
+    getBookStatuses(bookId: string): Observable<{id: number, checked: boolean}[]> {
+        return of(this.statusOptions.map(option => ({ 
+          id: option.id, 
+          checked: false 
+        })));
     }
 
-    // Méthode pour sauvegarder dans la base de données (à implémenter)
+    updateBookStatus(bookId: string, statusId: number, checked: boolean): Observable<boolean> {
+        console.log(`Livre ${bookId}: statut ${statusId} mis à ${checked}`);
+        return of(true); 
+    }
+
     private saveToDatabase(bookId: string, statusId: number, checked: boolean): void {
-        // Appel API pour sauvegarder les changements
-        // Exemple: this.http.post('/api/books/status', { bookId, statusId, checked });
     }
 }

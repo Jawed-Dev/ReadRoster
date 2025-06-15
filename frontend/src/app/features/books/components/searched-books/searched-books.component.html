@@ -5,8 +5,8 @@
 
                 <img class="cursor-pointer"
                     [src]="book.volumeInfo.imageLinks?.thumbnail" 
-                     [alt]="book.volumeInfo.title"
-                     onerror="this.src='assets/placeholder.jpg'">
+                    [alt]="book.volumeInfo.title"
+                    onerror="this.src='assets/placeholder.jpg'">
 
                 <h3 class="max-w-64 font-medium truncate text-center px-2 mt-5">{{ book.volumeInfo.title }}</h3>
                 <p class="max-w-64 truncate text-center">{{ book.volumeInfo.authors.join(', ') }}</p>

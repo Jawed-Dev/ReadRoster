@@ -20,7 +20,7 @@ import { Observable } from "rxjs";
 export class SearchedBooksComponent {
     books$: Observable<any[]>; // changer le type
     isLoading: boolean = false;
-    searchDto: SearchPayload = {
+    searchPayload: SearchPayload = {
       title: ''
     };
     
@@ -30,7 +30,7 @@ export class SearchedBooksComponent {
   
     loadBooks() {
       this.isLoading = true;
-      this.booksService.searchBooks(this.searchDto).subscribe({
+      this.booksService.searchBooks(this.searchPayload).subscribe({
         next: () => {
           this.isLoading = false;
         },

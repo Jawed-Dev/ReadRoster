@@ -36,8 +36,10 @@ export class DropDownMenuComponent  {
             const target = event.target as HTMLElement;
             if (!target.closest('app-drop-down-menu')) {
                 this.isMenuOpen = false;
+                event.stopPropagation();
             }
         }
+        
     }
 
     toggleMenu(): void {

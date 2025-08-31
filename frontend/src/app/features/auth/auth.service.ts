@@ -9,9 +9,16 @@ import { environment } from '@env/environment';
   providedIn: 'root' 
 })
 export class AuthService {
+
+  // API base URL
   private baseUrl = environment.apiUrlAuth;
-  isAuthenticated$ = new BehaviorSubject<boolean>(false);
+  
+  // BehaviorSubject
   private currentUserSubject = new BehaviorSubject<AuthDto | null>(null);
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+
+  // Observable
+  public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
   public currentUser$ = this.currentUserSubject.asObservable();
   
   constructor(private http: HttpClient) {
@@ -22,11 +29,11 @@ export class AuthService {
     this.isAuthenticated().subscribe({
       next: (response) => {
         console.log('Auth check response:', response);
-        this.isAuthenticated$.next(response);
+        this.isAuthenticatedSubject.next(response);
       },
       error: (error) => {
         console.error('Auth check error:', error);
-        this.isAuthenticated$.next(false);
+        this.isAuthenticatedSubject.next(false);
       }
     });
   }
@@ -58,7 +65,7 @@ export class AuthService {
       tap(response => {
         if (response) {
           console.log('Login successful, setting isAuthenticated$ to true');
-          this.isAuthenticated$.next(true);
+          this.isAuthenticatedSubject.next(true);
           this.getCurrentUser().subscribe(); 
         }
       })
@@ -70,7 +77,7 @@ export class AuthService {
       withCredentials: true
     }).pipe(
       tap(() => {
-        this.isAuthenticated$.next(false);
+        this.isAuthenticatedSubject.next(false);
       })
     );
   }  

@@ -6,9 +6,10 @@ import { environment } from "@env/environment";
 
 @Injectable()
 export class BooksService {
+    private apiUrl = environment.apiUrlBooks;
     private booksSubject = new BehaviorSubject<GoogleBooksDto[]>([]);
     public books$ = this.booksSubject.asObservable();  
-    private apiUrl = environment.apiUrlBooks;
+    
     constructor(private http: HttpClient) {}
 
     searchBooks(SearchPayload: SearchPayload): Observable<GoogleBooksDto[]> {  

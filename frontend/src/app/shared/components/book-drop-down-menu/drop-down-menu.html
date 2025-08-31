@@ -7,16 +7,16 @@
         class="absolute w-full right-0 bottom-[-110px] bg-white border border-gray-200 rounded-md shadow-lg"
         (click)="$event.stopPropagation()"
         clickOutside="closeMenu()">
-
-        <div *ngFor="let option of menuOptions" 
+        
+        <div *ngFor="let status of bookStatus" 
             class="flex pl-[70px] items-center hover:bg-gray-200 cursor-pointer" 
-            (click)="option.checked = !option.checked">
+            (click)="toggleStatus(status.id, $event)">
             <div class="flex items-center">
-                <input type="checkbox" [checked]="option.checked" 
-                (click)="$event.stopPropagation()"/>
-                <p class="pl-5"> {{ option.label }} </p>
-                
+                <input type="checkbox" [checked]="status.checked" 
+                (click)="toggleStatus(status.id, $event)"/>
+                <p class="pl-5"> {{ status.label }} </p>
             </div>
         </div>
+        
     </div>
 </div>

@@ -27,6 +27,16 @@ export class SearchedBooksComponent {
     constructor(private booksService: BooksService) {
       this.books$ = this.booksService.books$;  
     }
+
+    onBookStatusChanged(book: any, allStatuses: {id: number, label: string, checked: boolean}[]): void {
+        console.log(`Livre: ${book.volumeInfo.title}`);
+        console.log('Statuts mis à jour:', allStatuses);
+        
+        // Exemple : vérifier quels statuts sont cochés
+        const checkedStatuses = allStatuses.filter(status => status.checked);
+        console.log('Statuts cochés:', checkedStatuses.map(s => s.label));
+        // Ici tu peux sauvegarder en base, mettre à jour un service, etc.
+    }
   
     loadBooks() {
       this.isLoading = true;

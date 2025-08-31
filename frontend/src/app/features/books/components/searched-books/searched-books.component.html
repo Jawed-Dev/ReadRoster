@@ -12,8 +12,9 @@
                 <p class="max-w-64 truncate text-center">{{ book.volumeInfo.authors.join(', ') }}</p>
 
                 <app-drop-down-menu
-                    [itemId] = "book.id"
-                    [itemName] = "book.volumeInfo.title">
+                    [itemGoogleId] = "book.id"
+                    [itemGoogleName] = "book.volumeInfo.title"
+                    (statusChanged)="onBookStatusChanged(book, $event)">
                 </app-drop-down-menu>
             </div>
         </div>

@@ -25,4 +25,10 @@ public class BooksController {
                 .body(booksResponse.getData());
     }
 
+    @PostMapping("updateStatus")
+    public void updateStatus(@RequestBody UpdateStatusPayload updateStatusPayload) {
+        System.out.println(updateStatusPayload);
+        this.booksService.updateStatus(updateStatusPayload);
+    }
+
 }

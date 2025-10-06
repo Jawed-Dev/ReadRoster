@@ -7,4 +7,5 @@ import java.util.Optional;
 @Repository
 public interface BooksRepository extends JpaRepository<Books, Long> {
     //Optional<Books> findById(Integer id);
+    Optional<Books> findByIdGoogleBook(String idGoogleBook);
 }

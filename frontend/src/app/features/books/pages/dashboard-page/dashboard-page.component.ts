@@ -35,12 +35,12 @@ export class DashboardPageComponent {
   isLoading: boolean = false;
 
   constructor(private booksService: BooksService, private authService: AuthService, private router: Router) {
-    this.books$ = this.booksService.books$;  
+    this.books$ = this.booksService.googleBook$;  
   }
 
   loadBooks() {
     this.isLoading = true;
-    this.booksService.searchBooks(this.searchDto).subscribe({
+    this.booksService.searchBooks(this.searchDto.title).subscribe({
       next: () => {
         this.isLoading = false;
       },

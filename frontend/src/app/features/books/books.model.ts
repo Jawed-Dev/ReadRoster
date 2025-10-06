@@ -9,6 +9,20 @@ export interface GoogleBooksDto {
     };
 }
 
+export interface BooksDto {
+    idGoogleBook: string;
+    favory: boolean;
+    read: boolean;
+    toRead: boolean;
+    reading: boolean;
+}
+
 export interface SearchPayload {
     title: string;
+}
+
+
+export interface UpdateStatusPayload {
+    idGoogleBook: string;
+    status: {id: number, label: string, checked: boolean}[];
 }

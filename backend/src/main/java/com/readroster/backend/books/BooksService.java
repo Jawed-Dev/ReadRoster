@@ -26,8 +26,19 @@ public class BooksService {
         try {
             List<GoogleBooksDto> books = googleBooksService.searchBooksByTitle(searchPayload.getTitle());                           // Bloque pour obtenir le résultat
             return BooksResponse.success(books);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             return BooksResponse.error("Erreur sur la recherche de livre");
         }
+    }
+
+    public void updateStatus(UpdateStatusPayload updateStatusPayload) {
+        String testId = "WddYEAAAQBAJ";
+
+        Books book = booksRepository.findByIdGoogleBook(testId)
+                .orElseThrow(() -> new RuntimeException("Livre non trouvé"));
+
+        book.updateStatuses(updateStatusPayload.getStatus());
+        booksRepository.save(book);
     }
 }

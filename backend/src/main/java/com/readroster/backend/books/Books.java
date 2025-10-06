@@ -18,9 +18,9 @@ public class Books {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int idGoogleBook;
+    private String idGoogleBook;
     private boolean favory;
-    private boolean read;
+    private boolean isRead;
     private boolean toRead;
     private boolean reading;
 
@@ -30,10 +30,10 @@ public class Books {
             boolean checked = (Boolean) status.get("checked");
 
             switch (id) {
-                case 1: this.read = checked; break;
-                case 2: this.toRead = checked; break;
-                case 3: this.reading = checked; break;
-                case 4: this.favory = checked; break;
+                case 1: this.favory = checked; break;
+                case 2: this.isRead = checked; break;
+                case 3: this.toRead = checked; break;
+                case 4: this.reading = checked; break;
             }
         }
     }
@@ -46,11 +46,11 @@ public class Books {
         this.id = id;
     }
 
-    public int getIdGoogleBook() {
+    public String getIdGoogleBook() {
         return idGoogleBook;
     }
 
-    public void setIdGoogleBook(int idGoogleBook) {
+    public void setIdGoogleBook(String idGoogleBook) {
         this.idGoogleBook = idGoogleBook;
     }
 
@@ -63,11 +63,11 @@ public class Books {
     }
 
     public boolean isRead() {
-        return read;
+        return isRead;
     }
 
     public void setRead(boolean read) {
-        this.read = read;
+        this.isRead = read;
     }
 
     public boolean isToRead() {

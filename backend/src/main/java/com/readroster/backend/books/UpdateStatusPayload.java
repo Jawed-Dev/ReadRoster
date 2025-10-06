@@ -7,7 +7,6 @@ public class UpdateStatusPayload {
     private String idGoogleBook;
     private List<Map<String, Object>> status;
 
-    // Constructeurs
     public UpdateStatusPayload() {}
 
     public UpdateStatusPayload(String idGoogleBook, List<Map<String, Object>> status) {
@@ -15,7 +14,6 @@ public class UpdateStatusPayload {
         this.status = status;
     }
 
-    // Getters et Setters
     public String getIdGoogleBook() {
         return idGoogleBook;
     }

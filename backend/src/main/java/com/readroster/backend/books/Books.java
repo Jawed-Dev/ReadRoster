@@ -1,10 +1,12 @@
 package com.readroster.backend.books;
+import com.readroster.backend.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +21,13 @@ public class Books {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String idGoogleBook;
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User userId;
+
     private boolean favory;
     private boolean isRead;
     private boolean toRead;
@@ -36,6 +45,26 @@ public class Books {
                 case 4: this.reading = checked; break;
             }
         }
+    }
+
+    public List<Map<String, Object>> getStatuses() {
+        List<Map<String, Object>> statuses = new ArrayList<>();
+
+        statuses.add(Map.of("id", 1, "checked", this.favory));
+        statuses.add(Map.of("id", 2, "checked", this.isRead));
+        statuses.add(Map.of("id", 3, "checked", this.toRead));
+        statuses.add(Map.of("id", 4, "checked", this.reading));
+
+        return statuses;
+    }
+
+
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
     public Long getId() {

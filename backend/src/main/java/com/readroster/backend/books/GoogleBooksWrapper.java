@@ -1,5 +1,7 @@
 package com.readroster.backend.books;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.readroster.backend.books.dto.GoogleBooksDto;
+
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -9,7 +11,6 @@ public class GoogleBooksWrapper {
     public List<GoogleBooksDto> getItems() {
         return items;
     }
-
     public void setItems(List<GoogleBooksDto> items) {
         this.items = items;
     }

@@ -1,5 +1,4 @@
 package com.readroster.backend.books;
-
 import com.readroster.backend.auth.AuthResponse;
 
 public class BooksResponse<T> {

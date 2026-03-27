@@ -11,3 +11,4 @@ frontend/.angular/
 backend/target/
 backend/HELP.md
 backend/.mvn/wrapper/maven-wrapper.jar 
+backend/src/main/resources/application.properties

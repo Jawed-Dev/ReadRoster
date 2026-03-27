@@ -1,4 +1,4 @@
-package com.readroster.backend.books;
+package com.readroster.backend.books.payloads;
 
 public class SearchPayload {
     private String title;

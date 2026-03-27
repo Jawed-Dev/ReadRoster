@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { GoogleBooksDto, SearchPayload } from "@features/books/books.model";
 import { BooksService } from "@features/books/books.service";
@@ -23,6 +23,8 @@ export class SearchedBooksComponent {
     searchPayload: SearchPayload = {
       title: ''
     };
+    @Input() itemGoogleId: string = '';
+    
     
     constructor(private booksService: BooksService) {
       this.books$ = this.booksService.googleBook$;  
@@ -35,7 +37,7 @@ export class SearchedBooksComponent {
       const checkedStatuses = allStatuses.filter(status => status.checked);
       console.log('Statuts cochés:', checkedStatuses.map(s => s.label));
 
-      alert(book.id);
+      console.log("boodId :", book.id);
 
       this.booksService.updateStatusBook(book.id,allStatuses).subscribe({
           next: () => {

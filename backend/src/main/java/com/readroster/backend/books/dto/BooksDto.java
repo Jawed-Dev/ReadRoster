@@ -1,4 +1,4 @@
-package com.readroster.backend.books;
+package com.readroster.backend.books.dto;
 
 public class BooksDto {
     private String title;
@@ -10,4 +10,6 @@ public class BooksDto {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public record StatusRequestDto(String idGoogleBook) {}
 }

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, catchError, Observable, tap, throwError } from "rxjs";
+import { BehaviorSubject, catchError, Observable, switchMap, tap, throwError } from "rxjs";
 import { GoogleBooksDto, SearchPayload, UpdateStatusPayload, BooksDto } from "./books.model";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "@env/environment";
@@ -21,6 +21,7 @@ export class BooksService {
             .pipe(
                 tap(response => {  
                     console.log('Réponse de la recherche de livres:', response);
+                    console.log('Type:', typeof response, 'Valeur:', JSON.stringify(response));
                     if (response) this.googleBookSubject.next(response);
                 }),
                 catchError(error => {
@@ -33,11 +34,14 @@ export class BooksService {
 
     updateStatusBook(idGoogleBook: string, allStatuses: { id: number; label: string; checked: boolean; }[]): any {  
         const updateStatusPayload: UpdateStatusPayload = { idGoogleBook, status: allStatuses };
-        return this.http.post<BooksDto[]>(`${this.apiUrl}/updateStatus`, updateStatusPayload)
+        return this.http.post<BooksDto[]>(`${this.apiUrl}/updateStatus`, updateStatusPayload, { withCredentials: true })
             .pipe(
                 tap(response => {  
-                    console.log('Réponse de la mise à jour des status du livre:', response);
-                    if (response) this.bookSubject.next(response);
+                    
+                    if (response) {
+                        console.log('Réponse de la mise à jour des status du livre:', response);
+                        this.bookSubject.next(response);
+                    }
                 }),
                 catchError(error => {
                     console.error('Erreur lors du chargement des livres:', error);
@@ -45,6 +49,14 @@ export class BooksService {
                     return throwError(() => error); 
                 })
             );
+    }
+
+    getStatusesBook(idGoogleBook: string): Observable<BooksDto | null> {
+        return this.http.post<BooksDto>(
+            `${this.apiUrl}/getStatuses`,
+            { idGoogleBook },
+            { withCredentials: true }
+        );
     }
 
     

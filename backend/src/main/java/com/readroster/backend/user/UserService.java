@@ -19,6 +19,17 @@ public class UserService {
         this.sessionService = sessionService;
     }
 
+    public User getCurrentUser() {
+        if (!this.sessionService.isAuthenticated()) {
+            throw new RuntimeException("L'utilisateur n'est pas connecté");
+        }
+
+        AuthDto authDto = this.sessionService.getDataSession();
+
+        return this.userRepository.findByEmail(authDto.getEmail())
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+    }
+
     public UserResponse<UserDto> getDataUser() {
         try {
 

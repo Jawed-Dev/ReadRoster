@@ -1,4 +1,4 @@
-package com.readroster.backend.books;
+package com.readroster.backend.books.payloads;
 
 import java.util.List;
 import java.util.Map;

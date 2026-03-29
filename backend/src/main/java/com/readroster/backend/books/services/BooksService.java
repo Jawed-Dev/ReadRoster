@@ -9,7 +9,6 @@ import com.readroster.backend.user.User;
 import com.readroster.backend.user.UserService;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -26,7 +25,7 @@ public class BooksService {
 
     public BooksResponse<List<GoogleBooksDto>> searchByTitle(SearchPayload searchPayload) {
         try {
-            List<GoogleBooksDto> books = googleBooksService.searchBooksByTitle(searchPayload.getTitle());                           // Bloque pour obtenir le résultat
+            List<GoogleBooksDto> books = googleBooksService.searchBooksByTitle(searchPayload.getTitle());
             return BooksResponse.success(books);
         }
         catch (Exception e) {
@@ -34,16 +33,29 @@ public class BooksService {
         }
     }
 
-    public void updateStatus(UpdateStatusPayload updateStatusPayload) {
-
-        System.out.println(updateStatusPayload);
-
+    public void addBook(String idGoogleBook) {
         User userData = userService.getCurrentUser();
+        Optional<Books> check = booksRepository.findByUserIdAndIdGoogleBook(userData,idGoogleBook);
+        if (check.isPresent()) {
+            throw new RuntimeException ("Ce livre est déjà ajouté par l'utilisateur");
+        }
 
+        Books book = new Books();
+        book.setUserId(userData);
+        book.setIdGoogleBook(idGoogleBook);
+        booksRepository.save(book);
+    }
+
+    public boolean isUserAddedBook(String idGoogleBook) {
+        User userData = userService.getCurrentUser();
+        Optional<Books> books = booksRepository.findByUserIdAndIdGoogleBook(userData, idGoogleBook);
+        return books.isPresent();
+    }
+
+    public void updateStatus(UpdateStatusPayload updateStatusPayload) {
+        System.out.println(updateStatusPayload);
+        User userData = userService.getCurrentUser();
         String idGoogleBook = updateStatusPayload.getIdGoogleBook();
-
-        //booksRepository.findByUserId(userData)
-                //.orElseThrow(() -> new RuntimeException("User non trouvé"));
 
         Books book = booksRepository.findByUserIdAndIdGoogleBook(userData, idGoogleBook)
                 .orElseGet(() -> {
@@ -52,7 +64,6 @@ public class BooksService {
                     newBook.setIdGoogleBook(idGoogleBook);
                     return newBook;
                 });
-
         book.updateStatuses(updateStatusPayload.getStatus());
         booksRepository.save(book);
     }

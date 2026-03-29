@@ -62,6 +62,10 @@ export class DropDownMenuComponent  {
         }
     }
 
+    isAlreadyAdded(itemGoogleId : string) {
+
+    }
+
 
     @HostListener('document:click', ['$event'])
     clickOutside(event: Event): void {

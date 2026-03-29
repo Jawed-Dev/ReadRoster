@@ -54,4 +54,9 @@ public class BooksController {
         return test;
     }
 
+    @PostMapping("isUserAddedBook")
+    public ResponseEntity<Boolean> isUserAddedBook(@RequestBody String idGoogleBook) {
+        return ResponseEntity.ok(booksService.isUserAddedBook(idGoogleBook));
+    }
+
 }

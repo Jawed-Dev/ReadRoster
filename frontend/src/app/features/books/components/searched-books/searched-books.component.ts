@@ -20,15 +20,38 @@ import { Observable } from "rxjs";
 export class SearchedBooksComponent {
     books$: Observable<any[]>; // changer le type
     isLoading: boolean = false;
+    isAlreadyAdded: boolean = false;
     searchPayload: SearchPayload = {
       title: ''
     };
     @Input() itemGoogleId: string = '';
     
+    /*ngOnInit() {
+      this.checkIfBookAdded(this.itemGoogleId);
+    }*/
+
+    isAlreadyAddedMap: Map<string, boolean> = new Map();
+
+    ngOnInit() {
+        this.books$.subscribe(books => {
+            books.forEach(book => {
+                this.booksService.isUserAddedBook(book.id).subscribe(response => {
+                    this.isAlreadyAddedMap.set(book.id, !!response);
+                });
+            });
+        });
+    }
     
     constructor(private booksService: BooksService) {
       this.books$ = this.booksService.googleBook$;  
     }
+
+    checkIfBookAdded(itemGoogleId: string): void {
+    this.booksService.isUserAddedBook(itemGoogleId).subscribe(response => {
+        console.log("Livre ID : ${itemGoogleId} déjà ajouté")
+        this.isAlreadyAdded = !!response;
+    });
+}
 
     onBookStatusChanged(book: any, allStatuses: {id: number, label: string, checked: boolean}[]): void {
       console.log(`Livre: ${book.volumeInfo.title}`);

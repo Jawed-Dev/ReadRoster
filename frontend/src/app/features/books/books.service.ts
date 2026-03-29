@@ -37,7 +37,6 @@ export class BooksService {
         return this.http.post<BooksDto[]>(`${this.apiUrl}/updateStatus`, updateStatusPayload, { withCredentials: true })
             .pipe(
                 tap(response => {  
-                    
                     if (response) {
                         console.log('Réponse de la mise à jour des status du livre:', response);
                         this.bookSubject.next(response);
@@ -50,6 +49,10 @@ export class BooksService {
                 })
             );
     }
+
+    isUserAddedBook(idGoogleBook: string) {
+    return this.http.post<boolean>(`${this.apiUrl}/isUserAddedBook`, idGoogleBook, { withCredentials: true});
+}
 
     getStatusesBook(idGoogleBook: string): Observable<BooksDto | null> {
         return this.http.post<BooksDto>(

@@ -33,17 +33,27 @@ public class BooksService {
         }
     }
 
-    public void addBook(String idGoogleBook) {
+    public Books addBook(String idGoogleBook) {
         User userData = userService.getCurrentUser();
         Optional<Books> check = booksRepository.findByUserIdAndIdGoogleBook(userData,idGoogleBook);
         if (check.isPresent()) {
             throw new RuntimeException ("Ce livre est déjà ajouté par l'utilisateur");
         }
-
         Books book = new Books();
         book.setUserId(userData);
         book.setIdGoogleBook(idGoogleBook);
-        booksRepository.save(book);
+        return booksRepository.save(book);
+    }
+
+    public Books deleteBook(String idGoogleBook) {
+        User userData = userService.getCurrentUser();
+        Optional<Books> check = booksRepository.findByUserIdAndIdGoogleBook(userData,idGoogleBook);
+        if (!check.isPresent()) {
+            throw new RuntimeException ("Ce livre n'a pas encore été ajouté");
+        }
+        Books book = check.get();
+        booksRepository.delete(book);
+        return book;
     }
 
     public boolean isUserAddedBook(String idGoogleBook) {

@@ -36,9 +36,7 @@ public class BooksController {
     public ResponseEntity<String> updateStatus(@RequestBody UpdateStatusPayload updateStatusPayload) {
         System.out.println(updateStatusPayload);
         this.booksService.updateStatus(updateStatusPayload);
-        return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body("test");
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("getStatuses")
@@ -55,8 +53,18 @@ public class BooksController {
     }
 
     @PostMapping("isUserAddedBook")
-    public ResponseEntity<Boolean> isUserAddedBook(@RequestBody String idGoogleBook) {
-        return ResponseEntity.ok(booksService.isUserAddedBook(idGoogleBook));
+    public ResponseEntity<Boolean> isUserAddedBook(@RequestBody BooksDto.StatusRequestDto request) {
+        return ResponseEntity.ok(booksService.isUserAddedBook(request.idGoogleBook()));
+    }
+
+    @PostMapping("addBook")
+    public ResponseEntity<Books> addBook(@RequestBody BooksDto.StatusRequestDto request) {
+        return ResponseEntity.ok(booksService.addBook(request.idGoogleBook()));
+    }
+
+    @PostMapping("deleteBook")
+    public ResponseEntity<Books> deleteBook(@RequestBody BooksDto.StatusRequestDto request) {
+        return ResponseEntity.ok(booksService.deleteBook(request.idGoogleBook()));
     }
 
 }

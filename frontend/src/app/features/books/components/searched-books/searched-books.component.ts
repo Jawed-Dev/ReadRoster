@@ -18,18 +18,13 @@ import { Observable } from "rxjs";
 })
 
 export class SearchedBooksComponent {
-    books$: Observable<any[]>; // changer le type
+    books$: Observable<any[]>; 
     isLoading: boolean = false;
     isAlreadyAdded: boolean = false;
     searchPayload: SearchPayload = {
       title: ''
     };
     @Input() itemGoogleId: string = '';
-    
-    /*ngOnInit() {
-      this.checkIfBookAdded(this.itemGoogleId);
-    }*/
-
     isAlreadyAddedMap: Map<string, boolean> = new Map();
 
     ngOnInit() {
@@ -46,12 +41,27 @@ export class SearchedBooksComponent {
       this.books$ = this.booksService.googleBook$;  
     }
 
-    checkIfBookAdded(itemGoogleId: string): void {
-    this.booksService.isUserAddedBook(itemGoogleId).subscribe(response => {
-        console.log("Livre ID : ${itemGoogleId} déjà ajouté")
-        this.isAlreadyAdded = !!response;
-    });
-}
+    addBook(idGoogleBook: string): void {
+        this.booksService.addBook(idGoogleBook).subscribe({
+            next: () => {
+                this.isAlreadyAddedMap.set(idGoogleBook, true);
+            },
+            error: () => {
+                console.error('Erreur lors de l\'ajout du livre');
+            }
+        });
+    }
+
+    deleteBook(idGoogleBook: string): void {
+        this.booksService.deleteBook(idGoogleBook).subscribe({
+            next: () => {
+                this.isAlreadyAddedMap.delete(idGoogleBook);
+            },
+            error: () => {
+                console.error('Erreur lors de la supression du livre');
+            }
+        });
+    }
 
     onBookStatusChanged(book: any, allStatuses: {id: number, label: string, checked: boolean}[]): void {
       console.log(`Livre: ${book.volumeInfo.title}`);

@@ -6,6 +6,9 @@ import { environment } from "@env/environment";
 
 @Injectable()
 export class BooksService {
+    getUserBooks() {
+      throw new Error("Method not implemented.");
+    }
     private apiUrl = environment.apiUrlBooks;
     private googleBookSubject = new BehaviorSubject<GoogleBooksDto[]>([]);
     public googleBook$ = this.googleBookSubject.asObservable();  
@@ -50,9 +53,17 @@ export class BooksService {
             );
     }
 
+    addBook(idGoogleBook: string) : any {
+        return this.http.post<BooksDto>(`${this.apiUrl}/addBook`, { idGoogleBook } , { withCredentials: true });
+    }
+
+    deleteBook(idGoogleBook: string) : any {
+        return this.http.post<BooksDto>(`${this.apiUrl}/deleteBook`, { idGoogleBook } , { withCredentials: true });
+    }
+
     isUserAddedBook(idGoogleBook: string) {
-    return this.http.post<boolean>(`${this.apiUrl}/isUserAddedBook`, idGoogleBook, { withCredentials: true});
-}
+        return this.http.post<boolean>(`${this.apiUrl}/isUserAddedBook`, { idGoogleBook }, { withCredentials: true});
+    }
 
     getStatusesBook(idGoogleBook: string): Observable<BooksDto | null> {
         return this.http.post<BooksDto>(
